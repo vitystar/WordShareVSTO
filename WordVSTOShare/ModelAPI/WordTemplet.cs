@@ -20,6 +20,18 @@ namespace ModelAPI
         /// </summary>
         public string TempletName { get; set; }
         /// <summary>
+        /// 模板文件简介
+        /// </summary>
+        public string TempletIntroduction { get; set; }
+        /// <summary>
+        /// 模板所属组织
+        /// </summary>
+        public Guid Organization { get; set; }
+        /// <summary>
+        /// 文档的可访问性
+        /// </summary>
+        public Accessibility Accessibility { get; set; }
+        /// <summary>
         /// 模板文件路径
         /// </summary>
         public string FilePath { get; set; }

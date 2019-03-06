@@ -48,6 +48,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Accessibility.cs" />
+    <Compile Include="OrganizationInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserAuth.cs" />
     <Compile Include="UserInfo.cs" />

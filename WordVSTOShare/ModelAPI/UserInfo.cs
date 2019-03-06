@@ -27,6 +27,9 @@ namespace ModelAPI
         /// 用户权限
         /// </summary>
         public UserAuth UserAuth { get; set; }
-        public string Organization { get; set; }
+        /// <summary>
+        /// 组织名称
+        /// </summary>
+        public Guid Organization { get; set; }
     }
 }
