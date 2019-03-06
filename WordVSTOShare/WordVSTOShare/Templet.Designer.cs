@@ -35,35 +35,38 @@
         private void InitializeComponent()
         {
             Microsoft.Office.Tools.Ribbon.RibbonDialogLauncher ribbonDialogLauncherImpl1 = this.Factory.CreateRibbonDialogLauncher();
-            this.ProvideShare = this.Factory.CreateRibbonTab();
+            this.PrivateShare = this.Factory.CreateRibbonTab();
             this.GrpOption = this.Factory.CreateRibbonGroup();
-            this.IPAddr = this.Factory.CreateRibbonEditBox();
+            this.UserName = this.Factory.CreateRibbonEditBox();
             this.btnSubmit = this.Factory.CreateRibbonButton();
             this.GrpBroswer = this.Factory.CreateRibbonGroup();
             this.labelTmpName = this.Factory.CreateRibbonLabel();
-            this.ProvideShare.SuspendLayout();
+            this.PassWord = this.Factory.CreateRibbonEditBox();
+            this.PrivateShare.SuspendLayout();
             this.GrpOption.SuspendLayout();
             this.GrpBroswer.SuspendLayout();
             this.SuspendLayout();
             // 
-            // ProvideShare
+            // PrivateShare
             // 
-            this.ProvideShare.Groups.Add(this.GrpOption);
-            this.ProvideShare.Groups.Add(this.GrpBroswer);
-            this.ProvideShare.Label = "私有共享";
-            this.ProvideShare.Name = "ProvideShare";
+            this.PrivateShare.Groups.Add(this.GrpOption);
+            this.PrivateShare.Groups.Add(this.GrpBroswer);
+            this.PrivateShare.Label = "私有共享";
+            this.PrivateShare.Name = "PrivateShare";
             // 
             // GrpOption
             // 
-            this.GrpOption.Items.Add(this.IPAddr);
+            this.GrpOption.Items.Add(this.UserName);
+            this.GrpOption.Items.Add(this.PassWord);
             this.GrpOption.Items.Add(this.btnSubmit);
             this.GrpOption.Label = "设置";
             this.GrpOption.Name = "GrpOption";
             // 
-            // IPAddr
+            // UserName
             // 
-            this.IPAddr.Label = "服务器地址";
-            this.IPAddr.Name = "IPAddr";
+            this.UserName.Label = "用户名";
+            this.UserName.Name = "UserName";
+            this.UserName.Text = null;
             // 
             // btnSubmit
             // 
@@ -84,14 +87,19 @@
             this.labelTmpName.Label = " ";
             this.labelTmpName.Name = "labelTmpName";
             // 
+            // PassWord
+            // 
+            this.PassWord.Label = "密码";
+            this.PassWord.Name = "PassWord";
+            // 
             // Templet
             // 
             this.Name = "Templet";
             this.RibbonType = "Microsoft.Word.Document";
-            this.Tabs.Add(this.ProvideShare);
+            this.Tabs.Add(this.PrivateShare);
             this.Load += new Microsoft.Office.Tools.Ribbon.RibbonUIEventHandler(this.Templet_Load);
-            this.ProvideShare.ResumeLayout(false);
-            this.ProvideShare.PerformLayout();
+            this.PrivateShare.ResumeLayout(false);
+            this.PrivateShare.PerformLayout();
             this.GrpOption.ResumeLayout(false);
             this.GrpOption.PerformLayout();
             this.GrpBroswer.ResumeLayout(false);
@@ -102,12 +110,13 @@
 
         #endregion
 
-        internal Microsoft.Office.Tools.Ribbon.RibbonTab ProvideShare;
+        internal Microsoft.Office.Tools.Ribbon.RibbonTab PrivateShare;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup GrpOption;
-        internal Microsoft.Office.Tools.Ribbon.RibbonEditBox IPAddr;
+        internal Microsoft.Office.Tools.Ribbon.RibbonEditBox UserName;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btnSubmit;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup GrpBroswer;
         internal Microsoft.Office.Tools.Ribbon.RibbonLabel labelTmpName;
+        internal Microsoft.Office.Tools.Ribbon.RibbonEditBox PassWord;
     }
 
     partial class ThisRibbonCollection
