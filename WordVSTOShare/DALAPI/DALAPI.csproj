@@ -55,6 +55,7 @@
     <Compile Include="DBSession.cs" />
     <Compile Include="EFFactory.cs" />
     <Compile Include="IBaseDAL.cs" />
+    <Compile Include="IDBSession.cs" />
     <Compile Include="IOrganizationInfoDal.cs" />
     <Compile Include="IUserInfoDal.cs" />
     <Compile Include="IWordTempletDal.cs" />

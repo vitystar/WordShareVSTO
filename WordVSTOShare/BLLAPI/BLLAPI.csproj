@@ -43,5 +43,15 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DALAPI\DALAPI.csproj">
+      <Project>{6d8971a5-8499-4352-b27c-23ad814287c1}</Project>
+      <Name>DALAPI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ModelAPI\ModelAPI.csproj">
+      <Project>{08f9c327-e686-4581-8755-797b2b29e5bf}</Project>
+      <Name>ModelAPI</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

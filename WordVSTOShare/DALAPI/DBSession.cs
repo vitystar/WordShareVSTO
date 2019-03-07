@@ -10,9 +10,9 @@ namespace DALAPI
     /// <summary>
     /// 封装数据操作类
     /// </summary>
-    public class DBSession
+    public class DBSession : IDBSession
     {
-        
+
 
         private IUserInfoDal _userInfoDal;
         private IOrganizationInfoDal _organizationInfoDal;
