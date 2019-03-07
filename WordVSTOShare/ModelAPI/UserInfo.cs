@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,22 +15,26 @@ namespace ModelAPI
         /// <summary>
         /// 用户标识
         /// </summary>
+        [Key]
         public int ID { get; set; }
         /// <summary>
         /// 用户名
         /// </summary>
+        [StringLength(32),Required]
         public string UserName { get; set; }
         /// <summary>
         /// 用户密码
         /// </summary>
+        [StringLength(32),Required]
         public string UserPwd { get; set; }
         /// <summary>
         /// 用户权限
         /// </summary>
+        [Required]
         public UserAuth UserAuth { get; set; }
         /// <summary>
-        /// 组织名称
+        /// 所属组织
         /// </summary>
-        public Guid Organization { get; set; }
+        public virtual OrganizationInfo Organization { get; set; }
     }
 }
