@@ -45,10 +45,12 @@
     <Compile Include="DBSessionFactory.cs" />
     <Compile Include="IBaseService.cs" />
     <Compile Include="IOrganizationInfoService.cs" />
+    <Compile Include="IServiceSession.cs" />
     <Compile Include="IUserInfoService.cs" />
     <Compile Include="IWordTempletService.cs" />
     <Compile Include="OrganizationInfoService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServiceSession.cs" />
     <Compile Include="UserInfoService.cs" />
     <Compile Include="WordTempletService.cs" />
   </ItemGroup>
