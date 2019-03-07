@@ -11,7 +11,7 @@ namespace ServerForVSTO.Controllers
     {
 
         private static IServiceSession _serviceSession;
-        public static IServiceSession DBSession
+        public static IServiceSession ServiceSession
         {
             get
             {

@@ -20,12 +20,12 @@ namespace ModelAPI
         /// <summary>
         /// 用户名
         /// </summary>
-        [StringLength(32),Required]
+        [StringLength(32), Required]
         public string UserName { get; set; }
         /// <summary>
         /// 用户密码
         /// </summary>
-        [StringLength(32),Required]
+        [StringLength(32), Required]
         public string UserPwd { get; set; }
         /// <summary>
         /// 用户权限
@@ -36,5 +36,9 @@ namespace ModelAPI
         /// 所属组织
         /// </summary>
         public virtual OrganizationInfo Organization { get; set; }
+        /// <summary>
+        /// 创建的文档
+        /// </summary>
+        public virtual ICollection<WordTemplet> WordTemplets { get; set; }
     }
 }

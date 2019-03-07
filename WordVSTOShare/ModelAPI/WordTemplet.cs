@@ -32,6 +32,11 @@ namespace ModelAPI
         /// </summary>
         public virtual OrganizationInfo Organization { get; set; }
         /// <summary>
+        /// 模板所属成员
+        /// </summary>
+        [Required]
+        public virtual UserInfo User { get; set; }
+        /// <summary>
         /// 文档的可访问性
         /// </summary>
         [Required]
