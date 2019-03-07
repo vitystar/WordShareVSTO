@@ -1,4 +1,11 @@
-﻿<div class="container-fluid">
+﻿@{ 
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using ModelAPI
+@model IQueryable<WordTemplet>
+
+<div class="container-fluid">
     <div class="row-fluid">
         <div class="span12">
             <form class="form-search">

@@ -11,7 +11,7 @@ namespace ServerForVSTO.Controllers
         public ActionResult Index()
         {
             ViewBag.Title = "Home Page";
-
+            int pageIndex = Request["pageIndex"] != null ? int.Parse(Request["pageIndex"]) : 1;
             return View();
         }
     }

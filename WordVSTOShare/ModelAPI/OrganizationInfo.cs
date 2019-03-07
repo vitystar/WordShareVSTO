@@ -25,6 +25,10 @@ namespace ModelAPI
         [StringLength(32),Required]
         public string Password { get; set; }
         /// <summary>
+        /// 组织人员默认权限
+        /// </summary>
+        public UserAuth DefaultUserAuth { get; set; }
+        /// <summary>
         /// 组织中的模板文件
         /// </summary>
         public virtual ICollection<WordTemplet> WordTemplets { get; set; }

@@ -16,9 +16,13 @@ namespace ModelAPI
         /// </summary>
         Guest,
         /// <summary>
-        /// 普通用户
+        /// 只读权限
         /// </summary>
         User,
+        /// <summary>
+        /// 可上传权限
+        /// </summary>
+        Uploader,
         /// <summary>
         /// 管理员权限
         /// </summary>

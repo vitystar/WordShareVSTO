@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BLLAPI
 {
-    interface IWordTempletService:IBaseService<WordTemplet>
+    public interface IWordTempletService:IBaseService<WordTemplet>
     {
     }
 }

@@ -266,6 +266,16 @@
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BLLAPI\BLLAPI.csproj">
+      <Project>{ed90310a-9a9b-4937-a9eb-aaa81a49feb9}</Project>
+      <Name>BLLAPI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ModelAPI\ModelAPI.csproj">
+      <Project>{08f9c327-e686-4581-8755-797b2b29e5bf}</Project>
+      <Name>ModelAPI</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
