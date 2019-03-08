@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using ModelAPI
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -35,6 +37,17 @@
                 </div>
             </div>
         </div>*@
+
+    @{
+        UserInfo userInfo = (UserInfo)ViewData["UserInfo"];
+    }
+
+    <script>
+        $(function () {
+
+        })
+    </script>
+
     <div class="navbar">
         <div class="navbar-inner">
             <div class="container-fluid">
@@ -44,21 +57,30 @@
                         <li class="active"><a href="Index">主页</a></li>
                         <li><a href="#">成员管理</a></li>
                     </ul>
-
-                    <ul class="nav pull-right" contenteditable="true">
-                        <li><a href="#">右边链接</a></li>
-                        <li class="divider-vertical">&nbsp;</li>
-                        <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">下拉菜单 </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#">下拉导航1</a></li>
-                                <li><a href="#">下拉导航2</a></li>
-                                <li><a href="#">其他</a></li>
-                                <li class="divider">&nbsp;</li>
-                                <li><a href="#">链接3</a></li>
+                    @{
+                        if (userInfo == null)
+                        {
+                            <ul class="nav pull-right" contenteditable="true">
+                                <li><a id="modal-163521" href="#modal-container-163521" role="button" class="btn" data-toggle="modal">登录</a></li>
+                                <li class="divider-vertical">&nbsp;</li>
+                                <li><a href="#">注册</a></li>
+                                <li class="divider-vertical">&nbsp;</li>
                             </ul>
-                        </li>
-                    </ul>
+                        }
+                        else
+                        {
+                            <ul class="nav pull-right" contenteditable="true">
+                                <li class="dropdown">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">@userInfo.UserName</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#">个人信息</a></li>
+                                        <li><a href="#">组织信息</a></li>
+                                        <li><a href="#">模板管理</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        }
+                    }
                 </div>
                 <!-- /.nav-collapse -->
             </div>
@@ -71,6 +93,38 @@
     <div class="container body-content">
         @RenderBody()
         <hr />
+        <div id="modal-container-163521" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="myModalLabel">
+                    登录
+                </h3>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <fieldset>
+                        <legend contenteditable="true">登录</legend>
+                        <label contenteditable="true">用户名</label>
+                        <input placeholder="用户名" type="text" />
+                        <label contenteditable="true">密码</label>
+                        <input placeholder="密码" type="text" />
+                        <label contenteditable="true">手机号码</label>
+                        <input placeholder="手机号码" type="text" />
+                        <label contenteditable="true">组织ID</label>
+                        <input placeholder="组织ID" type="text" />
+                        <label contenteditable="true">组织密码</label>
+                        <input placeholder="组织密码" type="text" />
+                        <span class="help-block" contenteditable="true">这里填写帮助信息.</span>
+                        <label class="checkbox" contenteditable="true"> <input type="checkbox" /> 勾选同意 </label>
+                        <button class="btn" contenteditable="true" type="submit">提交</button>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary">找回密码</button>
+                <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+            </div>
+        </div>
         <footer>
             <p>&copy; @DateTime.Now.Year - 我的 ASP.NET 应用程序</p>
         </footer>

@@ -28,6 +28,11 @@ namespace ModelAPI
         [StringLength(32), Required]
         public string UserPwd { get; set; }
         /// <summary>
+        /// 用户手机号码
+        /// </summary>
+        [StringLength(32)]
+        public string PhoneNumber { get; set; }
+        /// <summary>
         /// 用户权限
         /// </summary>
         [Required]

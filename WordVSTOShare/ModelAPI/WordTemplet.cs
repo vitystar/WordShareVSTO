@@ -47,6 +47,11 @@ namespace ModelAPI
         [StringLength(255),Required]
         public string FilePath { get; set; }
         /// <summary>
+        /// 模板缩略图路径
+        /// </summary>
+        [StringLength(255),Required]
+        public string ImagePath { get; set; }
+        /// <summary>
         /// 模板上传的时间
         /// </summary>
         [Required]
