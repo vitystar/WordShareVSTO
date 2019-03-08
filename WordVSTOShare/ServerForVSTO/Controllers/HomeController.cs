@@ -16,10 +16,10 @@ namespace ServerForVSTO.Controllers
             string search = string.Empty;
             string accessable = string.Empty;
             int totalCount;
-            System.Linq.Expressions.Expression<Func<WordTemplet,bool>> whereLambda;
+            System.Linq.Expressions.Expression<Func<WordTemplet, bool>> whereLambda;
             IQueryable<WordTemplet> templets;
-            if (int.TryParse(Request["pageIndex"], out pageIndex))
-                pageIndex = pageIndex < 1 ? 1 : pageIndex;
+            int.TryParse(Request["pageIndex"], out pageIndex);
+            pageIndex = pageIndex < 1 ? 1 : pageIndex;
 
             if (userInfo == null)
                 whereLambda = w => w.Accessibility == Accessibility.Public;
@@ -36,7 +36,7 @@ namespace ServerForVSTO.Controllers
             }
             templets = ServiceSessionFactory.ServiceSession.WordTempletService.LoadEntityPage(pageIndex, 6, out totalCount, whereLambda, w => w.TempletName, true);
 
-            if (string.IsNullOrWhiteSpace(Request["search"]))
+            if (!string.IsNullOrWhiteSpace(Request["search"]))
             {
                 search = Request["search"];
                 ViewData["search"] = search;

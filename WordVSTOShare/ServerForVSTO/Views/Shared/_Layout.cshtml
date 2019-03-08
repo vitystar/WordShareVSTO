@@ -6,8 +6,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <script src="~/Content/bootstrap/js/bootstrap.js"></script>
     <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <script src="~/Content/bootstrap/js/bootstrap.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
     <link href="~/Content/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
     @*<script src="~/Scripts/jquery-3.3.1.min.js"></script>
         <script src="~/Scripts/bootstrap.min.js"></script>*@
@@ -15,67 +16,52 @@
         @Styles.Render("~/Content/css")*@
 </head>
 <body>
-    @*<div class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    @Html.ActionLink("word模板分享", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-                </div>
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li>@Html.ActionLink("主页", "Index", "Home", new { area = "" }, null)</li>
-                        <li>@Html.ActionLink("成员管理", "Index", "Help", new { area = "" }, null)</li>
-                    </ul>
-                    <ul class="nav pull-right contenteditable="true"">
-                        <li>@Html.ActionLink("登录", "Index", "Home", new { area = "" }, null)</li>
-                        <li>@Html.ActionLink("注册", "Index", "Help", new { area = "" }, null)</li>
-                    </ul>
-                </div>
-            </div>
-        </div>*@
 
     @{
         UserInfo userInfo = (UserInfo)ViewData["UserInfo"];
     }
 
+    @*登录注册回调函数*@
     <script>
-        $(function () {
-
-        })
+        function afterLogin(data) {
+            if (data == "success") {
+                window.location.reload();
+            } else {
+                alert(data);
+            }
+        }
     </script>
 
+    @*导航条*@
     <div class="navbar">
         <div class="navbar-inner">
             <div class="container-fluid">
-                <a class="btn btn-navbar" data-target=".navbar-responsive-collapse" data-toggle="collapse"> </a> <a class="brand" contenteditable="true" href="Index">Word文档共享</a>
+                <a class="btn btn-navbar" data-target=".navbar-responsive-collapse" data-toggle="collapse"> </a> <a class="brand" href="~/Home/Index">Word文档共享</a>
                 <div class="nav-collapse collapse navbar-responsive-collapse">
-                    <ul class="nav" contenteditable="true">
-                        <li class="active"><a href="Index">主页</a></li>
+                    <ul class="nav">
+                        <li class="active"><a href="~/Home/Index">主页</a></li>
                         <li><a href="#">成员管理</a></li>
                     </ul>
                     @{
                         if (userInfo == null)
                         {
-                            <ul class="nav pull-right" contenteditable="true">
-                                <li><a id="modal-163521" href="#modal-container-163521" role="button" class="btn" data-toggle="modal">登录</a></li>
+                            <ul class="nav pull-right">
+                                <li><a id="modal-160001" href="#modal-container-160001" role="button" data-toggle="modal">登录</a></li>
                                 <li class="divider-vertical">&nbsp;</li>
-                                <li><a href="#">注册</a></li>
+                                <li><a id="modal-160002" href="#modal-container-160002" role="button" data-toggle="modal">注册</a></li>
                                 <li class="divider-vertical">&nbsp;</li>
                             </ul>
                         }
                         else
                         {
-                            <ul class="nav pull-right" contenteditable="true">
+                            <ul class="nav pull-right">
                                 <li class="dropdown">
                                     <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">@userInfo.UserName</a>
                                     <ul class="dropdown-menu">
                                         <li><a href="#">个人信息</a></li>
                                         <li><a href="#">组织信息</a></li>
                                         <li><a href="#">模板管理</a></li>
+                                        <li><a href="#">退出登录</a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -93,7 +79,8 @@
     <div class="container body-content">
         @RenderBody()
         <hr />
-        <div id="modal-container-163521" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        @*登录表单*@
+        <div id="modal-container-160001" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 <h3 id="myModalLabel">
@@ -101,32 +88,56 @@
                 </h3>
             </div>
             <div class="modal-body">
-                <form>
-                    <fieldset>
+                @using (Ajax.BeginForm("UserLogin", "AJAXInterface", new { }, new AjaxOptions() { HttpMethod = "post", OnSuccess = "afterLogin" }, new { id = "loginForm" }))
+                {
                         <legend contenteditable="true">登录</legend>
                         <label contenteditable="true">用户名</label>
-                        <input placeholder="用户名" type="text" />
+                        <input placeholder="用户名" type="text" name="username" required />
                         <label contenteditable="true">密码</label>
-                        <input placeholder="密码" type="text" />
-                        <label contenteditable="true">手机号码</label>
-                        <input placeholder="手机号码" type="text" />
-                        <label contenteditable="true">组织ID</label>
-                        <input placeholder="组织ID" type="text" />
-                        <label contenteditable="true">组织密码</label>
-                        <input placeholder="组织密码" type="text" />
-                        <span class="help-block" contenteditable="true">这里填写帮助信息.</span>
-                        <label class="checkbox" contenteditable="true"> <input type="checkbox" /> 勾选同意 </label>
-                        <button class="btn" contenteditable="true" type="submit">提交</button>
-                    </fieldset>
-                </form>
+                        <input placeholder="密码" type="text" name="userPWD" required />
+                        <button class="btn"type="submit" id="userRegSubmit">提交</button>
+                }
             </div>
             <div class="modal-footer">
                 <button class="btn btn-primary">找回密码</button>
                 <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
             </div>
         </div>
+        @*注册表单*@
+        <div id="modal-container-160002" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="myModalLabel">
+                    注册
+                </h3>
+            </div>
+            <div class="modal-body">
+                @using (Ajax.BeginForm("UserReg", "AJAXInterface", new { }, new AjaxOptions() { HttpMethod = "post", OnSuccess = "afterLogin" }, new { id = "RegForm" }))
+                {
+                <fieldset>
+                    <legend contenteditable="true">注册</legend>
+                    <label contenteditable="true">用户名</label>
+                    <input placeholder="*用户名" type="text" name="username" required />
+                    <label contenteditable="true">密码</label>
+                    <input placeholder="*密码" type="text" name="userPWD" required />
+                    <label contenteditable="true">手机号码</label>
+                    <input placeholder="*手机号码" type="text" name="phoneNumber" required />
+                    <label contenteditable="true">组织ID</label>
+                    <input placeholder="组织ID" type="text" name="organizationID" />
+                    <label contenteditable="true">组织密码</label>
+                    <input placeholder="组织密码" type="text" name="organizationPWD" />
+                    <button class="btn" type="submit" id="userRegSubmit">提交</button>
+                </fieldset>
+                }
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary">找回密码</button>
+                <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+            </div>
+        </div>
+
         <footer>
-            <p>&copy; @DateTime.Now.Year - 我的 ASP.NET 应用程序</p>
+            <p>&copy; @DateTime.Now.Year - word模板分享</p>
         </footer>
     </div>
 </body>

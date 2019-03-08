@@ -34,7 +34,7 @@ namespace DALAPI
         {
             IQueryable<T> entities = db.Set<T>().Where(whereLambda);
             totalCount = entities.Count();
-            int pageCount = Convert.ToInt32(Math.Ceiling((double)totalCount / pageSize));
+            int pageCount = Convert.ToInt32(Math.Ceiling((double)totalCount / pageSize))>0? Convert.ToInt32(Math.Ceiling((double)totalCount / pageSize)):1;
             pageIndex = pageIndex > pageCount ? pageCount : pageIndex;
             if (asc)
                 entities = entities.OrderBy(orderbyLambda).Skip((pageIndex - 1) * pageSize).Take(pageSize);
