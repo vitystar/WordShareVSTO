@@ -6,6 +6,9 @@ using System.Xml.Linq;
 using Word = Microsoft.Office.Interop.Word;
 using Office = Microsoft.Office.Core;
 using Microsoft.Office.Tools.Word;
+using System.IO;
+using System.Windows.Forms;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace WordVSTOShare
 {
@@ -17,8 +20,10 @@ namespace WordVSTOShare
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
             app = Globals.ThisAddIn.Application;
-
+            FormFactory.MessagePath = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)+@"\wordTemplet\mymessage.wtp";
+ 
         }
+        
 
         private void ThisAddIn_Shutdown(object sender, System.EventArgs e)
         {
