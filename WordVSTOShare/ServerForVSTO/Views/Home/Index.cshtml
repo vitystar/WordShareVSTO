@@ -14,7 +14,11 @@
 <div class="container-fluid">
     <div class="row-fluid">
         <div class="span12">
+
+            @*筛选框*@
             <div class="row-fluid">
+
+                @*模板分类*@
                 <div class="span6">
                     <div class="btn-group">
                         <button class="btn">模板分类</button> <button data-toggle="dropdown" class="btn dropdown-toggle"><span class="caret"></span></button>
@@ -42,6 +46,8 @@
                         </ul>
                     </div>
                 </div>
+
+                @*查找框*@
                 <div class="span6">
                     <form class="form-search" action="~/Home/Index" method="get">
                         <input class="input-medium search-query" type="text" name="search" id="search" />
@@ -50,7 +56,11 @@
                         <button type="submit" class="btn">查找</button>
                     </form>
                 </div>
+
+
             </div>
+
+            @*模板列表*@
             <div class="row-fluid">
                 <div class="span12">
                     <ul class="thumbnails">
@@ -124,6 +134,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 </div>			

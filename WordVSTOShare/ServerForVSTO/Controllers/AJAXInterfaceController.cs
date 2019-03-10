@@ -76,5 +76,15 @@ namespace ServerForVSTO.Controllers
                 }
             }
         }
+
+        public ActionResult CheckUser(string username) => Content((ServiceSessionFactory.ServiceSession.UserInfoService.LoadEntity(u => u.UserName == username).Count() > 0).ToString());
+
+        public ActionResult Logout()
+        {
+            userInfo = null;
+            ViewData["UserInfo"] = null;
+            Session["UserInfo"] = null;
+            return Content("True");
+        }
     }
 }

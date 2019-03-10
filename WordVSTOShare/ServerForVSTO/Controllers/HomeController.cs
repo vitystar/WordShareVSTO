@@ -11,6 +11,7 @@ namespace ServerForVSTO.Controllers
     {
         public ActionResult Index()
         {
+            #region 初始化变量
             ViewBag.Title = "Home Page";
             int pageIndex = 1;
             string search = string.Empty;
@@ -19,8 +20,10 @@ namespace ServerForVSTO.Controllers
             System.Linq.Expressions.Expression<Func<WordTemplet, bool>> whereLambda;
             IQueryable<WordTemplet> templets;
             int.TryParse(Request["pageIndex"], out pageIndex);
-            pageIndex = pageIndex < 1 ? 1 : pageIndex;
+            pageIndex = pageIndex < 1 ? 1 : pageIndex; 
+            #endregion
 
+            #region 判断筛选选项
             if (userInfo == null)
                 whereLambda = w => w.Accessibility == Accessibility.Public;
             else
@@ -35,7 +38,9 @@ namespace ServerForVSTO.Controllers
                     whereLambda = w => w.Accessibility == Accessibility.Public || (w.Accessibility == Accessibility.Private && w.User.ID == userInfo.ID) || (w.Accessibility == Accessibility.Protected && w.Organization.ID == userInfo.Organization.ID);
             }
             templets = ServiceSessionFactory.ServiceSession.WordTempletService.LoadEntityPage(pageIndex, 6, out totalCount, whereLambda, w => w.TempletName, true);
+            #endregion
 
+            #region 判断搜索选项
             if (!string.IsNullOrWhiteSpace(Request["search"]))
             {
                 search = Request["search"];
@@ -45,11 +50,21 @@ namespace ServerForVSTO.Controllers
                            select t;
                 totalCount = templets.Count();
             }
+            #endregion
+            
+            #region 处理返回值
             ViewData["Templets"] = templets;
             int pageCount = Convert.ToInt32(Math.Ceiling((double)(totalCount / 6)));
             pageIndex = pageIndex > pageCount ? pageCount : pageIndex;
             ViewData["pageCount"] = pageCount;
-            ViewData["pageIndex"] = pageIndex;
+            ViewData["pageIndex"] = pageIndex; 
+            #endregion
+
+            return View();
+        }
+
+        public ActionResult OrganizationManager()
+        {
             return View();
         }
     }

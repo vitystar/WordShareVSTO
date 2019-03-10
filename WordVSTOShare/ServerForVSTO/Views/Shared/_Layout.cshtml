@@ -21,6 +21,82 @@
         UserInfo userInfo = (UserInfo)ViewData["UserInfo"];
     }
 
+    @*注册逻辑判断*@
+    <script>
+        var i1 = false;
+        var i2 = false;
+        var i3 = false;
+        var i4 = false;
+        function ableSub() {
+            if (i1 && i2 && i3 && i4)
+                $('#btnSub').attr('disabled', false);
+            else
+                $('#btnSub').attr('disabled', true);
+        }
+
+        $(function () {
+            $('#username').blur(function () {
+
+                if ($('#username').val() != "") {
+                    $.post('/AJAXInterface/CheckUser', { "username": $('#username').val() }, function (data) {
+                        if (data == "True") {
+                            $('#usernameMsg').css('color', 'red').html('用户名已存在');
+                            i1 = false;
+                            $('#btnSub').attr('disabled', true);
+                        } else {
+                            $('#usernameMsg').css('color', 'green').html('用户名可用');
+                            i1 = true;
+                            ableSub();
+                        }
+                    });
+                } else {
+                    $('#usernameMsg').css('color', 'red').html('用户名不能为空');
+                    i1 = false;
+                    $('#btnSub').attr('disabled', true);
+                }
+            });
+            $('#pwd').blur(function () {
+                if ($('#pwd').val() == "") {
+                    $('#pwdMsg').css('color', 'red').html('密码不能为空');
+                    i2 = false;
+                    $('#btnSub').attr('disabled', true);
+                } else {
+                    $('#pwdMsg').css('color', 'green').html('密码可用');
+                    i2 = true;
+                    ableSub();
+                }
+            });
+            $('#pwdValidate').blur(function () {
+                if ($('#pwdValidate').val() != $('#pwd').val()) {
+                    i3 = false;
+                    $('#btnSub').attr('disabled', true);
+                    $('#pwdValidateMsg').css('color', 'red').html('两次输入密码不一致');
+                } else if ($('#pwdValidate').val() == "") {
+                    i3 = false;
+                    $('#pwdValidateMsg').css('color', 'red').html('请再次输入密码');
+                    $('#btnSub').attr('disabled', true);
+                } else {
+                    $('#pwdValidateMsg').css('color', 'green').html('密码可用');
+                    i3 = true;
+                    ableSub();
+                }
+            });
+            $('#phonenumber').blur(function () {
+                if (!(/^1[3|4|5|7|8|9][0-9]\d{8}$/.test($('#phonenumber').val()))) {
+                    $('#phonenumberMsg').css('color', 'red').html('手机号码不正确');
+                    i4 = false;
+                    $('#btnSub').attr('disabled', true);;
+                } else {
+                    $('#phonenumberMsg').css('color', 'green').html('手机号码可用');
+                    i4 = true;
+                    ableSub();
+                }
+            });
+
+        });
+    </script>
+
+
     @*登录注册回调函数*@
     <script>
         function afterLogin(data) {
@@ -30,6 +106,22 @@
                 alert(data);
             }
         }
+    </script>
+
+    @*登出逻辑*@
+    <script>
+        $(function () {
+            $('#logOut').click(function () {
+                if (confirm('确认登出')) {
+                    $.post('/AJAXInterface/Logout', {}, function (data) {
+                        if (data == "True")
+                            window.location.reload();
+                        else
+                            alert("登出失败，请稍后再试");
+                    });
+                }
+            });
+        });
     </script>
 
     @*导航条*@
@@ -61,7 +153,7 @@
                                         <li><a href="#">个人信息</a></li>
                                         <li><a href="#">组织信息</a></li>
                                         <li><a href="#">模板管理</a></li>
-                                        <li><a href="#">退出登录</a></li>
+                                        <li><a href="javascript:void(0)" id="logOut">退出登录</a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -87,21 +179,21 @@
                     登录
                 </h3>
             </div>
-            <div class="modal-body">
-                @using (Ajax.BeginForm("UserLogin", "AJAXInterface", new { }, new AjaxOptions() { HttpMethod = "post", OnSuccess = "afterLogin" }, new { id = "loginForm" }))
-                {
-                        <legend contenteditable="true">登录</legend>
-                        <label contenteditable="true">用户名</label>
-                        <input placeholder="用户名" type="text" name="username" required />
-                        <label contenteditable="true">密码</label>
-                        <input placeholder="密码" type="text" name="userPWD" required />
-                        <button class="btn"type="submit" id="userRegSubmit">提交</button>
-                }
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-primary">找回密码</button>
-                <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
-            </div>
+            @using (Ajax.BeginForm("UserLogin", "AJAXInterface", new { }, new AjaxOptions() { HttpMethod = "post", OnSuccess = "afterLogin" }, new { id = "loginForm" }))
+            {
+                <div class="modal-body">
+                    <legend contenteditable="true">登录</legend>
+                    <label contenteditable="true">用户名</label>
+                    <input placeholder="用户名" type="text" name="username" id="usernameLog" required />
+                    <label contenteditable="true">密码</label>
+                    <input placeholder="密码" type="text" name="userPWD" required />
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" type="submit" id="userRegSubmit">登陆</button>
+                    <button class="btn btn-primary">找回密码</button>
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+                </div>}
         </div>
         @*注册表单*@
         <div id="modal-container-160002" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -111,34 +203,52 @@
                     注册
                 </h3>
             </div>
-            <div class="modal-body">
-                @using (Ajax.BeginForm("UserReg", "AJAXInterface", new { }, new AjaxOptions() { HttpMethod = "post", OnSuccess = "afterLogin" }, new { id = "RegForm" }))
-                {
-                <fieldset>
-                    <legend contenteditable="true">注册</legend>
-                    <label contenteditable="true">用户名</label>
-                    <input placeholder="*用户名" type="text" name="username" required />
-                    <label contenteditable="true">密码</label>
-                    <input placeholder="*密码" type="text" name="userPWD" required />
-                    <label contenteditable="true">手机号码</label>
-                    <input placeholder="*手机号码" type="text" name="phoneNumber" required />
-                    <label contenteditable="true">组织ID</label>
-                    <input placeholder="组织ID" type="text" name="organizationID" />
-                    <label contenteditable="true">组织密码</label>
-                    <input placeholder="组织密码" type="text" name="organizationPWD" />
-                    <button class="btn" type="submit" id="userRegSubmit">提交</button>
-                </fieldset>
-                }
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-primary">找回密码</button>
-                <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
-            </div>
+            @using (Ajax.BeginForm("UserReg", "AJAXInterface", new { }, new AjaxOptions() { HttpMethod = "post", OnSuccess = "afterLogin" }, new { id = "RegForm" }))
+            {
+                <div class="modal-body">
+                    <div class="form-group" id="divForm">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="username" name="username" placeholder="用户名" required />
+                            <span class="input-group-addon" id="usernameMsg">请填写用户名</span>
+                        </div>
+                        <br />
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="pwd" name="userPWD" placeholder="密码" required />
+                            <span class="input-group-addon" id="pwdMsg">请填写密码</span>
+                        </div>
+                        <br />
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="pwdValidate" name="pwdValidate" placeholder="确认密码" required />
+                            <span class="input-group-addon" id="pwdValidateMsg">请确认密码</span>
+                        </div>
+                        <br />
+                        <div class="input-group">
+                            <input type="tel" class="form-control" id="phonenumber" name="phoneNumber" placeholder="电话号码" required />
+                            <span class="input-group-addon" id="phonenumberMsg">请输入电话号码</span>
+                        </div>
+                        <br />
+                        <div class="input-group">
+                            <input type="email" class="form-control" id="email" name="organizationID" placeholder="组织ID" />
+                            <span class="input-group-addon" id="emailMsg">请输入组织ID(选填)</span>
+                        </div>
+                        <br />
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="address" name="organizationPWD" placeholder="组织密码" />
+                            <span class="input-group-addon" id="addressMsg">请输入组织密码(选填)</span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" type="submit" id="btnSub" disabled="true">立即注册</button>
+                        <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+                    </div>
+                </div>
+            }
+
+            <footer>
+                <p>&copy; @DateTime.Now.Year - word模板分享</p>
+            </footer>
         </div>
 
-        <footer>
-            <p>&copy; @DateTime.Now.Year - word模板分享</p>
-        </footer>
     </div>
 </body>
 </html>
