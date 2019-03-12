@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 namespace BLLAPI
 {
     /// <summary>
-    /// 组织成员操作接口
+    /// 幻灯片模板服务接口
     /// </summary>
-    public interface IOrganizationInfoService:IBaseService<OrganizationInfo>
+    public interface IPPTService:IBaseService<PPTTemplet>
     {
     }
 }

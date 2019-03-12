@@ -48,17 +48,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AudioService.cs" />
     <Compile Include="BaseService.cs" />
     <Compile Include="DBSessionFactory.cs" />
+    <Compile Include="ExcelService.cs" />
+    <Compile Include="IAudioService.cs" />
     <Compile Include="IBaseService.cs" />
+    <Compile Include="IExcelService.cs" />
+    <Compile Include="IImageService.cs" />
+    <Compile Include="ImageService.cs" />
     <Compile Include="IOrganizationInfoService.cs" />
+    <Compile Include="IPPTService.cs" />
     <Compile Include="IServiceSession.cs" />
     <Compile Include="IUserInfoService.cs" />
+    <Compile Include="IVideoService.cs" />
     <Compile Include="IWordTempletService.cs" />
     <Compile Include="OrganizationInfoService.cs" />
+    <Compile Include="PPTService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceSession.cs" />
     <Compile Include="UserInfoService.cs" />
+    <Compile Include="VideoService.cs" />
     <Compile Include="WordTempletService.cs" />
   </ItemGroup>
   <ItemGroup>

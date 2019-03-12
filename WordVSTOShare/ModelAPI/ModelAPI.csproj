@@ -50,10 +50,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Accessibility.cs" />
+    <Compile Include="AudioTemplet.cs" />
+    <Compile Include="BaseTemplet.cs" />
+    <Compile Include="ExcelTemplet.cs" />
+    <Compile Include="ImageTemplet.cs" />
     <Compile Include="OrganizationInfo.cs" />
+    <Compile Include="PPTTemplet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserAuth.cs" />
     <Compile Include="UserInfo.cs" />
+    <Compile Include="VideoTemplet.cs" />
     <Compile Include="WordDBContext.cs" />
     <Compile Include="WordTemplet.cs" />
   </ItemGroup>

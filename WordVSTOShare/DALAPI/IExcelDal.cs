@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BLLAPI
+namespace DALAPI
 {
     /// <summary>
-    /// 组织成员操作接口
+    /// Excel模板操作接口
     /// </summary>
-    public interface IOrganizationInfoService:IBaseService<OrganizationInfo>
+    public interface IExcelDal:IBaseDAL<ExcelTemplet>
     {
     }
 }

@@ -51,17 +51,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AudioDal.cs" />
     <Compile Include="BaseDAL.cs" />
     <Compile Include="DBSession.cs" />
     <Compile Include="EFFactory.cs" />
+    <Compile Include="ExcelDal.cs" />
+    <Compile Include="IAudioDal.cs" />
     <Compile Include="IBaseDAL.cs" />
     <Compile Include="IDBSession.cs" />
+    <Compile Include="IExcelDal.cs" />
+    <Compile Include="IImageDal.cs" />
+    <Compile Include="ImageDal.cs" />
     <Compile Include="IOrganizationInfoDal.cs" />
+    <Compile Include="IPPTDal.cs" />
     <Compile Include="IUserInfoDal.cs" />
+    <Compile Include="IVideoDal.cs" />
     <Compile Include="IWordTempletDal.cs" />
     <Compile Include="OrganizationInfoDal.cs" />
+    <Compile Include="PPTDal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserInfoDal.cs" />
+    <Compile Include="VideoDal.cs" />
     <Compile Include="WordTempletDal.cs" />
   </ItemGroup>
   <ItemGroup>

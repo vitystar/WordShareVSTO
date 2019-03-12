@@ -8,9 +8,10 @@ using System.Threading.Tasks;
 
 namespace BLLAPI
 {
-    public class UserInfoService : BaseService<UserInfo>,IUserInfoService
+    public class VideoService : BaseService<VideoTemplet>, IVideoService
     {
-        public UserInfoService() : base(DBSessionFactory.DBSession.UserInfoDal) { }
-
+        public VideoService() : base(DBSessionFactory.DBSession.VideoDal)
+        {
+        }
     }
 }

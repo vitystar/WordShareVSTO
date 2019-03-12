@@ -8,9 +8,10 @@ using System.Threading.Tasks;
 
 namespace BLLAPI
 {
-    public class UserInfoService : BaseService<UserInfo>,IUserInfoService
+    public class AudioService : BaseService<AudioTemplet>, IAudioService
     {
-        public UserInfoService() : base(DBSessionFactory.DBSession.UserInfoDal) { }
-
+        public AudioService() : base(DBSessionFactory.DBSession.AudioDal)
+        {
+        }
     }
 }

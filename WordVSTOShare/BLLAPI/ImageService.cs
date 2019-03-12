@@ -8,9 +8,10 @@ using System.Threading.Tasks;
 
 namespace BLLAPI
 {
-    public class UserInfoService : BaseService<UserInfo>,IUserInfoService
+    public class ImageService : BaseService<ImageTemplet>, IImageService
     {
-        public UserInfoService() : base(DBSessionFactory.DBSession.UserInfoDal) { }
-
+        public ImageService() : base(DBSessionFactory.DBSession.ImageDal)
+        {
+        }
     }
 }

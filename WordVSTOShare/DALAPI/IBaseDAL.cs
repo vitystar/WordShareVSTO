@@ -7,13 +7,13 @@ namespace DALAPI
     /// <summary>
     /// 数据操作接口
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T">要操作的数据类型</typeparam>
     public interface IBaseDAL<T>where T:class,new()
     {
         /// <summary>
         /// 创建数据库
         /// </summary>
-        /// <returns></returns>
+        /// <returns>数据库创捷结果</returns>
         bool CreateDataBase();
         /// <summary>
         /// 数据查询

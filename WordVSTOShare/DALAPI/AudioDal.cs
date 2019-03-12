@@ -5,12 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BLLAPI
+namespace DALAPI
 {
-    /// <summary>
-    /// 用户数据操作接口
-    /// </summary>
-    public interface IUserInfoService:IBaseService<UserInfo>
+    public class AudioDal:BaseDAL<AudioTemplet>,IAudioDal
     {
     }
 }

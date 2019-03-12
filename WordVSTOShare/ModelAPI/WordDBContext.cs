@@ -30,5 +30,10 @@ namespace ModelAPI
         public DbSet<WordTemplet> WordTemplet { get; set; }
         public DbSet<UserInfo> UserInfo { get; set; }
         public DbSet<OrganizationInfo> OrganizationInfo { get; set; }
+        public DbSet<ImageTemplet> ImageTemplet { get; set; }
+        public DbSet<AudioTemplet> AudioTemplet { get; set; }
+        public DbSet<VideoTemplet> VideoTemplet { get; set; }
+        public DbSet<ExcelTemplet> ExcelTemplet { get; set; }
+        public DbSet<PPTTemplet> PPTTemplet { get; set; }
     }
 }

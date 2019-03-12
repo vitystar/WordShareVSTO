@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 namespace BLLAPI
 {
     /// <summary>
-    /// 组织成员操作接口
+    /// 音频素材服务接口
     /// </summary>
-    public interface IOrganizationInfoService:IBaseService<OrganizationInfo>
+    public interface IAudioService:IBaseService<AudioTemplet>
     {
     }
 }

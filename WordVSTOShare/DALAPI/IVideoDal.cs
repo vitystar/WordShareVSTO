@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BLLAPI
+namespace DALAPI
 {
     /// <summary>
-    /// 组织成员操作接口
+    /// 视频模板操作接口
     /// </summary>
-    public interface IOrganizationInfoService:IBaseService<OrganizationInfo>
+    public interface IVideoDal:IBaseDAL<VideoTemplet>
     {
     }
 }

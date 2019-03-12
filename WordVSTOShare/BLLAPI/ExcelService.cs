@@ -8,9 +8,10 @@ using System.Threading.Tasks;
 
 namespace BLLAPI
 {
-    public class UserInfoService : BaseService<UserInfo>,IUserInfoService
+    public class ExcelService : BaseService<ExcelTemplet>, IExcelService
     {
-        public UserInfoService() : base(DBSessionFactory.DBSession.UserInfoDal) { }
-
+        public ExcelService() : base(DBSessionFactory.DBSession.ExcelDal)
+        {
+        }
     }
 }
