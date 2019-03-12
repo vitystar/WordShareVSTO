@@ -1,4 +1,5 @@
 ﻿using ModelAPI;
+using ServerForVSTO.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -85,6 +86,40 @@ namespace ServerForVSTO.Controllers
             ViewData["UserInfo"] = null;
             Session["UserInfo"] = null;
             return Content("True");
+        }
+
+        public ActionResult AccessChange(string access)
+        {
+            if (access == "organization")
+                screenResult.Accessable = Accessibility.Protected;
+            else if (access == "private")
+                screenResult.Accessable = Accessibility.Private;
+            else
+                screenResult.Accessable = Accessibility.Public;
+            return Content(access);
+        }
+
+        public ActionResult Search(string search)
+        {
+            screenResult.Search = search;
+            return Content(search);
+        }
+
+        public ActionResult TempletTypeChange(string templetType)
+        {
+            if (templetType == "video")
+                screenResult.TempletType = TempletType.VideoTemplet;
+            else if (templetType == "ppt")
+                screenResult.TempletType = TempletType.PPTTemplet;
+            else if (templetType == "excel")
+                screenResult.TempletType = TempletType.ExcelTemplet;
+            else if (templetType == "image")
+                screenResult.TempletType = TempletType.ImageTemplet;
+            else if (templetType == "audio")
+                screenResult.TempletType = TempletType.AudioTemplet;
+            else
+                screenResult.TempletType = TempletType.WordTemplet;
+            return Content(templetType);
         }
     }
 }

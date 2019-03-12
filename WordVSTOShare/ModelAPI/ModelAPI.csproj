@@ -54,6 +54,11 @@
     <Compile Include="BaseTemplet.cs" />
     <Compile Include="ExcelTemplet.cs" />
     <Compile Include="ImageTemplet.cs" />
+    <Compile Include="Migrations\201903080643204_InitialCreate.cs" />
+    <Compile Include="Migrations\201903080643204_InitialCreate.Designer.cs">
+      <DependentUpon>201903080643204_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OrganizationInfo.cs" />
     <Compile Include="PPTTemplet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -66,6 +71,11 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201903080643204_InitialCreate.resx">
+      <DependentUpon>201903080643204_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

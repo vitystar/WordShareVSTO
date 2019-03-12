@@ -15,32 +15,55 @@
     <div class="row-fluid">
         <div class="span12">
 
+            <script>
+                $(function () {
+                    //筛选权限
+                    $('.accessChoose').click(function () {
+                        $.post('/AJAXInterface/AccessChange', { 'access': this.id }, function (data) {
+                            window.location.reload();
+                        });
+                    });
+                    //查找搜索
+                    $('#searchSubmit').click(function () {
+                        $.post('/AJAXInterface/Search', { 'search': $('#search').val() }, function (data) {
+                            window.location.reload();
+                        });
+                    });
+                    //模板类型
+                    $('templetType').click(function () {
+                        $.post('/AJAXInterface/AccessChange', { 'templetType': this.id }, function (data) {
+                            window.location.reload();
+                        });
+                    });
+                });
+            </script>
+
             @*筛选框*@
             <div class="row-fluid">
 
-                @*模板分类*@
-                <div class="span6">
+                @*模板权限*@
+                <div class="span4">
                     <div class="btn-group">
-                        <button class="btn">模板分类</button> <button data-toggle="dropdown" class="btn dropdown-toggle"><span class="caret"></span></button>
+                        <button class="btn" disabled>模板权限</button> <button data-toggle="dropdown" class="btn dropdown-toggle"><span class="caret"></span></button>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="~/Home/Index?pageIndex=@ViewData["pageIndex"]&search=@ViewData["search"]&Accessable=Public">公共模板</a>
+                                <a href="javascript:void(0)" class="accessChoose" id="public">公共模板</a>
                             </li>
                             <li>
-                                <a href="~/Home/Index?pageIndex=@ViewData["pageIndex"]&search=@ViewData["search"]&Accessable=private">私有模板</a>
+                                <a href="javascript:void(0)" class="accessChoose" id="private">私有模板</a>
                             </li>
                             <li>
-                                <a href="~/Home/Index?pageIndex=@ViewData["pageIndex"]&search=@ViewData["search"]&Accessable=protected">组织模板</a>
+                                <a href="javascript:void(0)" class="accessChoose" id="organization">组织模板</a>
                             </li>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="~/Home/Index?pageIndex=@ViewData["pageIndex"]&search=@ViewData["search"]&Accessable=Public">公共模板</a>
+                                    <a href="javascript:void(0)" class="accessChoose" id="public">公共模板</a>
                                 </li>
                                 <li>
-                                    <a href="~/Home/Index?pageIndex=@ViewData["pageIndex"]&search=@ViewData["search"]&Accessable=private">私有模板</a>
+                                    <a href="javascript:void(0)" class="accessChoose" id="private">私有模板</a>
                                 </li>
                                 <li>
-                                    <a href="~/Home/Index?pageIndex=@ViewData["pageIndex"]&search=@ViewData["search"]&Accessable=protected">组织模板</a>
+                                    <a href="javascript:void(0)" class="accessChoose" id="organization">组织模板</a>
                                 </li>
                             </ul>
                         </ul>
@@ -48,13 +71,56 @@
                 </div>
 
                 @*查找框*@
-                <div class="span6">
-                    <form class="form-search" action="~/Home/Index" method="get">
-                        <input class="input-medium search-query" type="text" name="search" id="search" />
-                        <input type="hidden" name="pageIndex" id="pageIndex" value="@index" />
-                        <input type="hidden" name="Accessable" id="Accessable" value='@ViewData["Accessable"]' />
-                        <button type="submit" class="btn">查找</button>
-                    </form>
+                <div class="span4">
+                    <input class="input-medium search-query" type="text" name="search" id="search" value="@ViewData["search"]" />
+                    <button id="searchSubmit" class="btn">查找</button>
+                </div>
+
+                @*模板类型*@
+                <div class="span4">
+                    <div class="btn-group">
+                        <button class="btn" disabled>模板类型</button> <button data-toggle="dropdown" class="btn dropdown-toggle"><span class="caret"></span></button>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="javascript:void(0)" class="templetType" id="word">文档模板</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)" class="templetType" id="ppt">幻灯片模板</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)" class="templetType" id="excel">表格模板</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)" class="templetType" id="image">图片素材</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)" class="templetType" id="audio">音频素材</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)" class="templetType" id="video">视频素材</a>
+                            </li>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="javascript:void(0)" class="templetType" id="word">文档模板</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)" class="templetType" id="ppt">幻灯片模板</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)" class="templetType" id="excel">表格模板</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)" class="templetType" id="image">图片素材</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)" class="templetType" id="audio">音频素材</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)" class="templetType" id="video">视频素材</a>
+                                </li>
+                            </ul>
+                        </ul>
+                    </div>
                 </div>
 
 
@@ -65,9 +131,10 @@
                 <div class="span12">
                     <ul class="thumbnails">
                         @{
-                            IQueryable<WordTemplet> templets = (IQueryable<WordTemplet>)ViewData["Templets"];
+
+                            IQueryable<BaseTemplet> templets = (IQueryable<BaseTemplet>)ViewData["Templets"];
                             int i = 0;
-                            foreach (WordTemplet templet in templets)
+                            foreach (BaseTemplet templet in templets)
                             {
                                 if (i == 3)
                                 {
@@ -97,7 +164,7 @@
                     <div class="pagination pagination-centered pagination-large">
                         <ul>
                             <li>
-                                <a href="~/Home/Index?pageIndex=@(index-1)&search=@ViewData["search"]&Accessable=@ViewData["Accessable"]">上一页</a>
+                                <a href="/Home/Index?pageIndex=@(index-1)">上一页</a>
                             </li>
                             @{
                                 int count = (int)ViewData["pageCount"];
@@ -122,13 +189,13 @@
                                     for (i = j; i <= k; i++)
                                     {
                                         <li>
-                                            <a href="~/Home/Index?pageIndex=@i&search=@ViewData["search"]&Accessable=@ViewData["Accessable"]">@i</a>
+                                            <a href="~/Home/Index?pageIndex=@i" @if (i == index) { @MvcHtmlString.Create("class='active'") }>@i</a>
                                         </li>
                                     }
                                 }
                             }
                             <li>
-                                <a href="~/Home/Index?pageIndex=@((index+1)<=count?index+1:count)&search=@ViewData["search"]&Accessable=@ViewData["Accessable"]">下一页</a>
+                                <a href="~/Home/Index?pageIndex=@((index+1)<=count?index+1:count)">下一页</a>
                             </li>
                         </ul>
                     </div>

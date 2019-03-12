@@ -21,7 +21,7 @@ namespace BLLAPI
 
 
         public IQueryable<T> LoadEntityPage<S>(int pageIndex, int pageSize, out int totalCount, Expression<Func<T, bool>> whereLambda, Expression<Func<T, S>> orderbyLambda, bool asc) => CurrentDal.LoadEntityPage<S>(pageIndex, pageSize, out totalCount, whereLambda, orderbyLambda, asc);
-
+        
         public bool DeleteEntity(T entity) => CurrentDal.DeleteEntity(entity);
 
         public bool EditEntity(T entity) => CurrentDal.EditEntity(entity);

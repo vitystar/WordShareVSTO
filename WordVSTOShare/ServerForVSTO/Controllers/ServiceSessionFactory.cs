@@ -11,6 +11,9 @@ namespace ServerForVSTO.Controllers
     {
 
         private static IServiceSession _serviceSession;
+        /// <summary>
+        /// 获取服务实体对象
+        /// </summary>
         public static IServiceSession ServiceSession
         {
             get
