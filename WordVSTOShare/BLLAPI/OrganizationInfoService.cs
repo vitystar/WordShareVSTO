@@ -21,7 +21,7 @@ namespace BLLAPI
         /// <returns>组织对象</returns>
         public OrganizationInfo AddOrganization(string organizationName,string password,UserAuth userAuth)
         {
-            OrganizationInfo organizationInfo = new OrganizationInfo() { ID = new Guid(), OrganizationName = organizationName,Password = password, DefaultUserAuth = userAuth };
+            OrganizationInfo organizationInfo = new OrganizationInfo() { ID = Guid.NewGuid(), OrganizationName = organizationName,Password = password, DefaultUserAuth = userAuth };
             CurrentDal.AddEntity(organizationInfo);
             return organizationInfo;
         }

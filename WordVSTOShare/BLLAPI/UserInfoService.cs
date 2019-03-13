@@ -12,5 +12,15 @@ namespace BLLAPI
     {
         public UserInfoService() : base(DBSessionFactory.DBSession.UserInfoDal) { }
 
+        //public override bool EditEntity(UserInfo entity)
+        //{
+        //    UserInfo temp = CurrentDal.LoadEntity(u => u.ID == entity.ID).FirstOrDefault();
+        //    temp.UserName = entity.UserName;
+        //    temp.UserPwd = entity.UserPwd;
+        //    temp.UserAuth = entity.UserAuth;
+        //    temp.PhoneNumber = entity.PhoneNumber;
+        //    temp.Organization = entity.Organization;
+        //    return CurrentDal.EditEntity(temp);
+        //}
     }
 }

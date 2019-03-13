@@ -33,7 +33,7 @@ namespace DALAPI
                 if (_organizationInfoDal == null)
                 {
                     _organizationInfoDal = new OrganizationInfoDal();
-                    _userInfoDal.CreateDataBase();
+                    _organizationInfoDal.CreateDataBase();
                 }
                 return _organizationInfoDal;
             }

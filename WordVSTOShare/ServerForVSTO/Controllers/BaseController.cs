@@ -12,9 +12,7 @@ namespace ServerForVSTO.Controllers
     {
         protected UserInfo userInfo;
         protected ScreenResultModel screenResult = new ScreenResultModel(1,"",Accessibility.Public,TempletType.WordTemplet);
-
-        protected ServiceSessionFactory ServiceSessionFactory = new ServiceSessionFactory();
-
+        
         
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {

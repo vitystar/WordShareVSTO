@@ -178,7 +178,7 @@ namespace ServerForVSTO.Controllers
                 ServiceSessionFactory.ServiceSession.UserInfoService.EditEntity(userInfo);
             }
 
-            return Redirect("/Home/Index");
+            return Redirect("/Home/OrganizationManager");
         }
 
         /// <summary>

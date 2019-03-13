@@ -24,7 +24,7 @@ namespace BLLAPI
         
         public bool DeleteEntity(T entity) => CurrentDal.DeleteEntity(entity);
 
-        public bool EditEntity(T entity) => CurrentDal.EditEntity(entity);
+        public virtual bool EditEntity(T entity) => CurrentDal.EditEntity(entity);
 
         public bool AddEntity(T entity) => CurrentDal.AddEntity(entity);
     }
