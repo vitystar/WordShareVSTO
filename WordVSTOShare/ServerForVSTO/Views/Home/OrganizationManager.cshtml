@@ -52,10 +52,17 @@
         else
         { auth = false; }
 
-        <a id="modal-19870" href="#modal-container-19870" role="button" class="btn input-block-level" data-toggle="modal">组织信息</a>
 
-
-
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span6">
+                    <a id="modal-19870" href="#modal-container-19870" role="button" class="btn btn-block btn-info" data-toggle="modal">组织信息管理</a>
+                </div>
+                <div class="span6">
+                    <button class="btn btn-block btn-danger" type="button">退出组织</button>
+                </div>
+            </div>
+        </div>
         <table class="table table-striped table-hover" contenteditable="true">
             <thead>
                 <tr>
@@ -73,16 +80,16 @@
                         <tr>
                             <td>@user.UserName</td>
                             <td>
-                                <select name="Auth" id="selectAuth" value="@user.UserAuth" required @{if (!auth) { @MvcHtmlString.Create("disabled")  } }>
-                                    <option selected="selected">普通用户</option>
+                                <select name="Auth" id="selectAuth" value="@user.UserAuth" required @{if (user.ID == userInfo.ID || !auth) { @MvcHtmlString.Create("disabled")  } }>
+                                    <option>普通用户</option>
                                     <option>可上传</option>
                                     <option>管理员</option>
                                 </select>
                             </td>
                             <td>@user.PhoneNumber</td>
                             <td>
-                                <span><a class="btn danger" @{if (user.ID == userInfo.ID) { @MvcHtmlString.Create("disabled")  } }>删除用户</a></span>
-                                <span><a class="btn">保存设置</a></span>
+                                <span><a class="btn danger" @{if (user.ID == userInfo.ID || !auth) { @MvcHtmlString.Create("disabled")  } }>删除用户</a></span>
+                                <span><a class="btn" @{if (user.ID == userInfo.ID || !auth) { @MvcHtmlString.Create("disabled")  } }>保存设置</a></span>
                             </td>
                         </tr>
                     }
@@ -100,7 +107,7 @@
                 </h3>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" action="/Home/OrganizationCreate">
+                <form class="form-horizontal">
                     <div class="control-group">
                         <label class="control-label" for="OrganizationName">组织ID</label>
                         <div class="controls">
@@ -110,28 +117,23 @@
                     <div class="control-group">
                         <label class="control-label" for="OrganizationName">组织名称</label>
                         <div class="controls">
-                            <input class="input-block-level" id="OrganizationName" name="OrganizationName" placeholder="OrganizationName" type="text" @{if (!auth) { @MvcHtmlString.Create("disabled") } } />
+                            <input class="input-block-level" id="OrganizationName" name="OrganizationName" placeholder="OrganizationName" type="text" @{if (!auth) { @MvcHtmlString.Create("disabled")  } } />
                         </div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label" for="inputPassword" >组织密码</label>
+                        <label class="control-label" for="inputPassword">组织密码</label>
                         <div class="controls">
-                            <input class="input-block-level" id="inputPassword" name="OrganizationPWD" placeholder="OrganizationPassword" type="password"  @{if (!auth) { @MvcHtmlString.Create("disabled") } } />
+                            <input class="input-block-level" id="inputPassword" name="OrganizationPWD" placeholder="OrganizationPassword" type="password" @{if (!auth) { @MvcHtmlString.Create("disabled")  } } />
                         </div>
                     </div>
                     <div class="control-group">
                         <label class="control-label" for="inputEmail">组织默认权限</label>
                         <div class="controls">
-                            <select class="input-block-level" name="Auth"  @{if (!auth) { @MvcHtmlString.Create("disabled") } } >
+                            <select class="input-block-level" name="Auth" @{if (!auth) { @MvcHtmlString.Create("disabled")  } }>
                                 <option>普通用户</option>
                                 <option>可上传</option>
                                 <option>管理员</option>
                             </select>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="controls">
-                            <button class="btn">修改组织</button>
                         </div>
                     </div>
                 </form>

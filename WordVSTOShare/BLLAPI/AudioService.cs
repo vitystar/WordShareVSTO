@@ -13,5 +13,17 @@ namespace BLLAPI
         public AudioService() : base(DBSessionFactory.DBSession.AudioDal)
         {
         }
+
+        public override bool EditEntity(AudioTemplet entity) => EditEntityWithSelect(w => w.ID == entity.ID, (temp) =>
+        {
+            temp.Accessibility = entity.Accessibility;
+            temp.FilePath = entity.FilePath;
+            temp.ImagePath = entity.ImagePath;
+            temp.ModTime = DateTime.Now;
+            temp.Organization = entity.Organization;
+            temp.TempletIntroduction = entity.TempletIntroduction;
+            temp.TempletName = entity.TempletName;
+            return temp;
+        });
     }
 }

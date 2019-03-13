@@ -25,5 +25,12 @@ namespace BLLAPI
             CurrentDal.AddEntity(organizationInfo);
             return organizationInfo;
         }
+
+        public override bool EditEntity(OrganizationInfo entity) => EditEntityWithSelect(o => o.ID == entity.ID, (temp) => {
+            temp.DefaultUserAuth = entity.DefaultUserAuth;
+            temp.OrganizationName = entity.OrganizationName;
+            temp.Password = entity.Password;
+            return temp;
+        });
     }
 }

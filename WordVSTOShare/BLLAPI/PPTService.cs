@@ -13,5 +13,17 @@ namespace BLLAPI
         public PPTService() : base(DBSessionFactory.DBSession.PPTDal)
         {
         }
+
+        public override bool EditEntity(PPTTemplet entity) => EditEntityWithSelect(w => w.ID == entity.ID, (temp) =>
+        {
+            temp.Accessibility = entity.Accessibility;
+            temp.FilePath = entity.FilePath;
+            temp.ImagePath = entity.ImagePath;
+            temp.ModTime = DateTime.Now;
+            temp.Organization = entity.Organization;
+            temp.TempletIntroduction = entity.TempletIntroduction;
+            temp.TempletName = entity.TempletName;
+            return temp;
+        });
     }
 }

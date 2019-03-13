@@ -175,6 +175,7 @@ namespace ServerForVSTO.Controllers
                     default: userAuth = UserAuth.User; break;
                 }
                 userInfo.Organization = ServiceSessionFactory.ServiceSession.OrganizationInfoService.AddOrganization(organizationName, organizationPWD, userAuth);
+                userInfo.UserAuth = UserAuth.Admin;
                 ServiceSessionFactory.ServiceSession.UserInfoService.EditEntity(userInfo);
             }
 

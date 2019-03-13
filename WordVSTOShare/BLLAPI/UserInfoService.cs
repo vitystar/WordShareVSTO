@@ -8,19 +8,18 @@ using System.Threading.Tasks;
 
 namespace BLLAPI
 {
-    public class UserInfoService : BaseService<UserInfo>,IUserInfoService
+    public class UserInfoService : BaseService<UserInfo>, IUserInfoService
     {
         public UserInfoService() : base(DBSessionFactory.DBSession.UserInfoDal) { }
 
-        //public override bool EditEntity(UserInfo entity)
-        //{
-        //    UserInfo temp = CurrentDal.LoadEntity(u => u.ID == entity.ID).FirstOrDefault();
-        //    temp.UserName = entity.UserName;
-        //    temp.UserPwd = entity.UserPwd;
-        //    temp.UserAuth = entity.UserAuth;
-        //    temp.PhoneNumber = entity.PhoneNumber;
-        //    temp.Organization = entity.Organization;
-        //    return CurrentDal.EditEntity(temp);
-        //}
+        public override bool EditEntity(UserInfo entity) => EditEntityWithSelect(u => u.ID == entity.ID, (temp) =>
+            {
+                temp.UserName = entity.UserName;
+                temp.UserPwd = entity.UserPwd;
+                temp.UserAuth = entity.UserAuth;
+                temp.PhoneNumber = entity.PhoneNumber;
+                temp.Organization = entity.Organization;
+                return temp;
+            });
     }
 }
