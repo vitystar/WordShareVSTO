@@ -12,5 +12,6 @@ namespace BLLAPI
     /// </summary>
     public interface IOrganizationInfoService:IBaseService<OrganizationInfo>
     {
+        OrganizationInfo AddOrganization(string organizationName, string password, UserAuth userAuth);
     }
 }

@@ -13,9 +13,12 @@ namespace ServerForVSTO.Controllers
         protected UserInfo userInfo;
         protected ScreenResultModel screenResult = new ScreenResultModel(1,"",Accessibility.Public,TempletType.WordTemplet);
 
-        protected override void OnActionExecuted(ActionExecutedContext filterContext)
+        protected ServiceSessionFactory ServiceSessionFactory = new ServiceSessionFactory();
+
+        
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            base.OnActionExecuted(filterContext);
+            base.OnActionExecuting(filterContext);
             if (Session["UserInfo"] != null)
             {
                 userInfo = (UserInfo)Session["UserInfo"];
@@ -34,6 +37,7 @@ namespace ServerForVSTO.Controllers
         {
             base.OnResultExecuting(filterContext);
             Session["screenResult"] = screenResult;
+            Session["UserInfo"] = userInfo;
             ViewData["search"] = screenResult.Search;
         }
     }

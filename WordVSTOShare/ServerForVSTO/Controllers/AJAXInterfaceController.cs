@@ -24,7 +24,6 @@ namespace ServerForVSTO.Controllers
             else if (userTemp.UserPwd == passWord)
             {
                 userInfo = userTemp;
-                Session["UserInfo"] = userInfo;
                 return Content("success");
             }
             else
@@ -47,7 +46,6 @@ namespace ServerForVSTO.Controllers
                 if (ServiceSessionFactory.ServiceSession.UserInfoService.AddEntity(newUser))
                 {
                     userInfo = newUser;
-                    Session["UserInfo"] = userInfo;
                     return Content("success");
                 }
                 else
@@ -120,6 +118,23 @@ namespace ServerForVSTO.Controllers
             else
                 screenResult.TempletType = TempletType.WordTemplet;
             return Content(templetType);
+        }
+
+        public ActionResult AddOrganization()
+        {
+            Guid organizationID = new Guid(Request["organizationID"]);
+            string organizationPWD = Request["organizationPWD"];
+            var organization = ServiceSessionFactory.ServiceSession.OrganizationInfoService.LoadEntity(o => o.ID == organizationID).FirstOrDefault();
+            if (organization == null)
+                return Content("该组织不存在");
+            else if (organization.Password == organizationPWD)
+            {
+                userInfo.Organization = organization;
+                ServiceSessionFactory.ServiceSession.UserInfoService.EditEntity(userInfo);
+                return Content("success");
+            }
+
+            return Content("组织密码错误");
         }
     }
 }

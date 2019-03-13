@@ -45,5 +45,25 @@ namespace ModelAPI
         /// 创建的文档
         /// </summary>
         public virtual ICollection<WordTemplet> WordTemplets { get; set; }
+        /// <summary>
+        /// 创建的幻灯片模板
+        /// </summary>
+        public virtual ICollection<PPTTemplet> PPTTemplets { get; set; }
+        /// <summary>
+        /// 创建的表格模板
+        /// </summary>
+        public virtual ICollection<ExcelTemplet> ExcelTemplets { get; set; }
+        /// <summary>
+        /// 创建的图片模板
+        /// </summary>
+        public virtual ICollection<ImageTemplet> ImageTemplets { get; set; }
+        /// <summary>
+        /// 创建的音频模板
+        /// </summary>
+        public virtual ICollection<AudioTemplet> AudioTemplets { get; set; }
+        /// <summary>
+        /// 创建的视频模板
+        /// </summary>
+        public virtual ICollection<VideoTemplet> VideoTemplets { get; set; }
     }
 }

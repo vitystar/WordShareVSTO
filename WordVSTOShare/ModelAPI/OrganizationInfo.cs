@@ -17,21 +17,41 @@ namespace ModelAPI
         /// <summary>
         /// 组织名称
         /// </summary>
-        [StringLength(32),Required]
+        [StringLength(32), Required]
         public string OrganizationName { get; set; }
         /// <summary>
         /// 组织密码，注册用户时需要该密码来加入组织
         /// </summary>
-        [StringLength(32),Required]
+        [StringLength(32), Required]
         public string Password { get; set; }
         /// <summary>
         /// 组织人员默认权限
         /// </summary>
         public UserAuth DefaultUserAuth { get; set; }
         /// <summary>
-        /// 组织中的模板文件
+        /// 组织中的文档模板
         /// </summary>
         public virtual ICollection<WordTemplet> WordTemplets { get; set; }
+        /// <summary>
+        /// 组织中的幻灯片模板
+        /// </summary>
+        public virtual ICollection<PPTTemplet> PPTTemplets {get;set;}
+        /// <summary>
+        /// 组织中的表格模板
+        /// </summary>
+        public virtual ICollection<ExcelTemplet> ExcelTemplets { get; set; }
+        /// <summary>
+        /// 组织中的图片模板
+        /// </summary>
+        public virtual ICollection<ImageTemplet> ImageTemplets { get; set; }
+        /// <summary>
+        /// 组织中的音频模板
+        /// </summary>
+        public virtual ICollection<AudioTemplet> AudioTemplets { get; set; }
+        /// <summary>
+        /// 组织中的视频模板
+        /// </summary>
+        public virtual ICollection<VideoTemplet> VideoTemplets { get; set; }
         /// <summary>
         /// 组织成员
         /// </summary>

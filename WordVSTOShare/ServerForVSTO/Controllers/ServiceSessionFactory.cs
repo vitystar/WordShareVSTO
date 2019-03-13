@@ -10,11 +10,11 @@ namespace ServerForVSTO.Controllers
     public class ServiceSessionFactory
     {
 
-        private static IServiceSession _serviceSession;
+        private IServiceSession _serviceSession;
         /// <summary>
         /// 获取服务实体对象
         /// </summary>
-        public static IServiceSession ServiceSession
+        public IServiceSession ServiceSession
         {
             get
             {

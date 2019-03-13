@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "OrganizationRegister";
+}
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span12">
+            <form class="form-horizontal" action="/Home/OrganizationCreate">
+                <div class="control-group">
+                    <label class="control-label" for="OrganizationName">组织名称</label>
+                    <div class="controls">
+                        <input class="input-block-level" required id="OrganizationName" name="OrganizationName" placeholder="OrganizationName" type="text" />
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="inputPassword">组织密码</label>
+                    <div class="controls">
+                        <input class="input-block-level" id="inputPassword" name="OrganizationPWD" type="password" required/>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="inputEmail">组织默认权限</label>
+                    <div class="controls">
+                        <select class="input-block-level" name="Auth" required>
+                        <option selected="selected">普通用户</option>
+                        <option>可上传</option>
+                        <option>管理员</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="controls">
+                        <button class="btn" type="submit">创建组织</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

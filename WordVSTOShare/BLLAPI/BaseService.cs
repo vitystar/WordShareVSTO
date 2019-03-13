@@ -10,7 +10,7 @@ namespace BLLAPI
 {
     public class BaseService<T> where T : class, new()
     {
-        private IBaseDAL<T> CurrentDal { get; set; }
+        protected IBaseDAL<T> CurrentDal { get; set; }
 
         public BaseService(IBaseDAL<T> currentDal)
         {

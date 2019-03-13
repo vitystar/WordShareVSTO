@@ -1,7 +1,85 @@
-﻿
+﻿@using ModelAPI;
 @{
     ViewBag.Title = "OrganizationManager";
 }
 
-<h2>OrganizationManager</h2>
+@*组织加入逻辑*@
+<script>
+    $(function () {
+        $('#addOrganization').click(function () {
+            $.post("/AJAXInterfaceController/AddOrganization", { "organizationID": $('#organizationID').val(), "organizationPWD": $('organizationPWD').val() }, function (data) {
+                if (data = "success")
+                    window.location.reload();
+                else
+                    alert(data);
+            });
+        });
+    });
+</script>
 
+@{
+    UserInfo userInfo = (UserInfo)ViewData["UserInfo"];
+    if (userInfo.Organization == null)
+    {
+        //无组织时加入组织提示
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="hero-unit">
+                        <h1>
+                            您还没有加入任何组织
+                        </h1>
+                        <p>
+                            如果您希望加入一个组织，请单击下面的加入组织或创建组织按钮。请注意，您可以随时退出组织并重新选择组织加入，但每个账号只能拥有一个组织。您的组织中可以没有任何的共享资源，但是请保证您的组织至少有一名成员，否则该组织将被删除。
+                        </p>
+                        <p>
+                            <a class="btn btn-primary btn-large" id="modal-807539" href="#modal-container-807539" role="button" data-toggle="modal">加入组织 »</a>
+                            <a class="btn btn-primary btn-large" href="/Home/OrganizationRegister">创建组织 »</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        string auth;
+        if (userInfo.UserAuth == UserAuth.Admin)
+        { auth = ""; }
+        else
+        { auth = "disabled"; }
+    }
+}
+
+
+
+
+@*加入组织信息遮罩窗体*@
+<div id="modal-container-807539" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">
+            组织信息
+        </h3>
+    </div>
+    <div class="modal-body">
+        <p>
+            <div class="control-group">
+                <label class="control-label" for="OrganizationID" id="organizationID">组织ID</label>
+                <div class="controls">
+                    <input id="OrganizationID" class="input-block-level" type="text" />
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="OrganizationPassWord" id="organizationPWD">组织密码</label>
+                <div class="controls">
+                    <input id="OrganizationPassWord" class="input-block-level" type="password" />
+                </div>
+            </div>
+        </p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" id="addOrganization">加入组织</button>
+        <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+    </div>
+</div>
