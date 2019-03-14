@@ -38,7 +38,9 @@ namespace BLLAPI
         {
             T temp = LoadEntity(wherelambda).FirstOrDefault();
             temp = EditEntityLambda(temp);
-            return CurrentDal.EditEntity(temp);
+            bool b = CurrentDal.EditEntity(temp);
+            temp = LoadEntity(wherelambda).FirstOrDefault();
+            return b;
         }
     }
 }

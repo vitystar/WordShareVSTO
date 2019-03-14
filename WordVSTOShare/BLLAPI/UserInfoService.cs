@@ -18,7 +18,8 @@ namespace BLLAPI
                 temp.UserPwd = entity.UserPwd;
                 temp.UserAuth = entity.UserAuth;
                 temp.PhoneNumber = entity.PhoneNumber;
-                temp.Organization = entity.Organization;
+                if (temp.Organization != entity.Organization)
+                    temp.Organization = entity.Organization;
                 return temp;
             });
     }

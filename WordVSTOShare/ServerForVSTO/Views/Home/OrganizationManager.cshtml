@@ -7,8 +7,8 @@
 <script>
     $(function () {
         $('#addOrganization').click(function () {
-            $.post("/AJAXInterfaceController/AddOrganization", { "organizationID": $('#organizationID').val(), "organizationPWD": $('organizationPWD').val() }, function (data) {
-                if (data = "success")
+            $.post("/AJAXInterface/AddOrganization", { "organizationID": $('#OrganizationID').val(), "organizationPWD": $('#OrganizationPassWord').val() }, function (data) {
+                if (data == "success")
                     window.location.reload();
                 else
                     alert(data);
@@ -16,6 +16,23 @@
         });
     });
 </script>
+
+@*退出组织逻辑*@
+<script>
+    $(function () {
+        $('#ExitOrganization').click(function () {
+            if (confirm("确认退出组织？")) {
+                $.post('/AJAXInterface/ExitOrganization', {}, function (data) {
+                    if (data != "Success")
+                        alert(data);
+                    window.location.href = "/Home/Index";
+                });
+            }
+        });
+    });
+</script>
+
+
 
 
 @{
@@ -31,7 +48,7 @@
                             您还没有加入任何组织
                         </h1>
                         <p>
-                            如果您希望加入一个组织，请单击下面的加入组织或创建组织按钮。请注意，您可以随时退出组织并重新选择组织加入，但每个账号只能拥有一个组织。您的组织中可以没有任何的共享资源，但是请保证您的组织至少有一名成员，否则该组织将被删除。
+                            如果您希望加入一个组织，请单击下面的加入组织或创建组织按钮。请注意，您可以随时退出组织并重新选择组织加入，但每个账号只能拥有一个组织。您的组织中可以没有任何的共享资源，但是请保证您的组织至少有一名成员，否则该组织将被解散。
                         </p>
                         <p>
                             <a class="btn btn-primary btn-large" id="modal-807539" href="#modal-container-807539" role="button" data-toggle="modal">加入组织 »</a>
@@ -59,7 +76,7 @@
                     <a id="modal-19870" href="#modal-container-19870" role="button" class="btn btn-block btn-info" data-toggle="modal">组织信息管理</a>
                 </div>
                 <div class="span6">
-                    <button class="btn btn-block btn-danger" type="button">退出组织</button>
+                    <button class="btn btn-block btn-danger" type="button" id="ExitOrganization">退出组织</button>
                 </div>
             </div>
         </div>
@@ -107,7 +124,7 @@
                 </h3>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal">
+                <form class="form-horizontal" action="/Home/EditOrganization">
                     <div class="control-group">
                         <label class="control-label" for="OrganizationName">组织ID</label>
                         <div class="controls">
@@ -117,13 +134,13 @@
                     <div class="control-group">
                         <label class="control-label" for="OrganizationName">组织名称</label>
                         <div class="controls">
-                            <input class="input-block-level" id="OrganizationName" name="OrganizationName" placeholder="OrganizationName" type="text" @{if (!auth) { @MvcHtmlString.Create("disabled")  } } />
+                            <input class="input-block-level" id="OrganizationName" name="OrganizationName" placeholder="OrganizationName" value="@organization.OrganizationName" type="text" @{if (!auth) { @MvcHtmlString.Create("disabled")  } } />
                         </div>
                     </div>
                     <div class="control-group">
                         <label class="control-label" for="inputPassword">组织密码</label>
                         <div class="controls">
-                            <input class="input-block-level" id="inputPassword" name="OrganizationPWD" placeholder="OrganizationPassword" type="password" @{if (!auth) { @MvcHtmlString.Create("disabled")  } } />
+                            <input class="input-block-level" id="inputPassword" name="OrganizationPWD" placeholder="OrganizationPassword" value="@organization.Password" type="password" @{if (!auth) { @MvcHtmlString.Create("disabled")  } } />
                         </div>
                     </div>
                     <div class="control-group">
@@ -139,7 +156,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button> <button class="btn btn-primary">保存设置</button>
+                <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button> <button class="btn btn-primary" @{if (!auth) { @MvcHtmlString.Create("disabled")  } } id="Mod">保存设置</button>
             </div>
         </div>
 

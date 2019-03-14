@@ -153,6 +153,8 @@ namespace ServerForVSTO.Controllers
 
         public ActionResult OrganizationRegister()
         {
+            if (userInfo == null)
+                return Redirect("/Home/Index");
             return View();
         }
 
@@ -180,6 +182,18 @@ namespace ServerForVSTO.Controllers
             }
 
             return Redirect("/Home/OrganizationManager");
+        }
+
+        public ActionResult EditOrganization()
+        {
+            if (userInfo.UserAuth != UserAuth.Admin)
+                return Redirect("/Home/Index");
+            OrganizationInfo organization = userInfo.Organization;
+            organization.OrganizationName = Request["OrganizationName"];
+            organization.Password = Request["OrganizationPWD"];
+            organization.DefaultUserAuth = (UserAuth)Enum.Parse(typeof(UserAuth), Request["Auth"]);
+            ServiceSessionFactory.ServiceSession.OrganizationInfoService.EditEntity(organization);
+            return Redirect("/Home/Index");
         }
 
         /// <summary>

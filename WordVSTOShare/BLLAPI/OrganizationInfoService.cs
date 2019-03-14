@@ -32,5 +32,17 @@ namespace BLLAPI
             temp.Password = entity.Password;
             return temp;
         });
+
+        public bool OrganizationDelete(OrganizationInfo organization)
+        {
+            organization = LoadEntity(o => o.ID == organization.ID).FirstOrDefault();
+            if (organization.UserInfos.Count() == 0)
+            {
+                DeleteEntity(organization);
+                return true;
+            }
+            else
+                return false;
+        }
     }
 }

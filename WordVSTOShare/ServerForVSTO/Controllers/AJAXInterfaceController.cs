@@ -136,5 +136,25 @@ namespace ServerForVSTO.Controllers
 
             return Content("组织密码错误");
         }
+
+        public ActionResult ExitOrganization()
+        {
+            if (userInfo == null)
+                return Content("您尚未登陆");
+            else if (userInfo.Organization == null)
+                return Content("您尚未加入任何组织");
+            else
+            {
+                OrganizationInfo organization = userInfo.Organization;
+                userInfo.Organization = null;
+                ServiceSessionFactory.ServiceSession.UserInfoService.EditEntity(userInfo);
+                if (ServiceSessionFactory.ServiceSession.OrganizationInfoService.OrganizationDelete(organization))
+                {
+                    return Content("退出成功，且由于您的组织中已无成员，该组织已解散");
+                }
+                else
+                    return Content("Success");
+            }
+        }
     }
 }
