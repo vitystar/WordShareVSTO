@@ -32,6 +32,43 @@
     });
 </script>
 
+@*组织修改逻辑*@
+<script>
+    $(function () {
+        $('#Mod').click(function () {
+            $.post('/AJAXInterface/ModOrganizationInfo', { 'Name': $('#OrganizationName').val(), 'PWD': $('#inputPassword').val(), 'Auth': $('#Auth').val() }, function (data) {
+                window.location.reload();
+            });
+        });
+    });
+</script>
+
+@*组织成员删除逻辑*@
+<script>
+    $(function () {
+        $('.delUser').click(function () {
+            $.post('/AJAXInterface/RemoveFromOrganization', {"userID":this.id}, function (data) {
+                if (data == "success")
+                    window.location.reload();
+                else
+                    alert(data);
+            });
+        });
+    });
+</script>
+
+<script>
+    $(function () {
+        $('.saveUser').click(function () {
+            $.post('/AJAXInterface/ChangeUserFromOrganization', { 'Auth': $(this).closest("tr").find(".selectAuth").val(), "ID": $(this).closest("tr").find(".selectAuth").attr("id") }, function (data) {
+                if (data == "success")
+                    window.location.reload();
+                else
+                    alert(data);
+            });
+        });
+    });
+</script>
 
 
 
@@ -61,6 +98,7 @@
     }
     else
     {
+        //有组织时显示组织信息
         OrganizationInfo organization = userInfo.Organization;
         ICollection<UserInfo> users = organization.UserInfos;
         bool auth;
@@ -97,7 +135,7 @@
                         <tr>
                             <td>@user.UserName</td>
                             <td>
-                                <select name="Auth" id="selectAuth" value="@user.UserAuth" required @{if (user.ID == userInfo.ID || !auth) { @MvcHtmlString.Create("disabled")  } }>
+                                <select name="Auth" class="selectAuth" id="@user.ID" value="@user.UserAuth.ToString()" required @{if (user.ID == userInfo.ID || !auth) { @MvcHtmlString.Create("disabled")  } }>
                                     <option>普通用户</option>
                                     <option>可上传</option>
                                     <option>管理员</option>
@@ -105,8 +143,8 @@
                             </td>
                             <td>@user.PhoneNumber</td>
                             <td>
-                                <span><a class="btn danger" @{if (user.ID == userInfo.ID || !auth) { @MvcHtmlString.Create("disabled")  } }>删除用户</a></span>
-                                <span><a class="btn" @{if (user.ID == userInfo.ID || !auth) { @MvcHtmlString.Create("disabled")  } }>保存设置</a></span>
+                                <span><a class="btn danger delUser" id="@user.ID" @{if (user.ID == userInfo.ID || !auth) { @MvcHtmlString.Create("disabled")  } }>删除用户</a></span>
+                                <span><a class="btn saveUser" id="@user.ID" @{if (user.ID == userInfo.ID || !auth) { @MvcHtmlString.Create("disabled")  } }>保存设置</a></span>
                             </td>
                         </tr>
                     }
@@ -146,7 +184,7 @@
                     <div class="control-group">
                         <label class="control-label" for="inputEmail">组织默认权限</label>
                         <div class="controls">
-                            <select class="input-block-level" name="Auth" @{if (!auth) { @MvcHtmlString.Create("disabled")  } }>
+                            <select class="input-block-level" value="@organization.DefaultUserAuth.ToString()" id="Auth" name="Auth" @{if (!auth) { @MvcHtmlString.Create("disabled")  } }>
                                 <option>普通用户</option>
                                 <option>可上传</option>
                                 <option>管理员</option>

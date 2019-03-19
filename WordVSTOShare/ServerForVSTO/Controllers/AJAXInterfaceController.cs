@@ -53,25 +53,33 @@ namespace ServerForVSTO.Controllers
             }
             else
             {
-                Guid organization = new Guid(organizationID);
-                OrganizationInfo organizationTemp = ServiceSessionFactory.ServiceSession.OrganizationInfoService.LoadEntity(o => o.ID == organization).FirstOrDefault();
-                if (organizationTemp == null)
-                    return Content("组织不存在");
-                if (organizationTemp.Password == organizationPWD)
+                try
                 {
-                    UserInfo newUser = new UserInfo() { PhoneNumber = phoneNumber, UserAuth = organizationTemp.DefaultUserAuth, UserName = userName, UserPwd = passWord, Organization = organizationTemp, };
-                    if (ServiceSessionFactory.ServiceSession.UserInfoService.AddEntity(newUser))
+
+                    Guid organization = new Guid(organizationID);
+                    OrganizationInfo organizationTemp = ServiceSessionFactory.ServiceSession.OrganizationInfoService.LoadEntity(o => o.ID == organization).FirstOrDefault();
+                    if (organizationTemp == null)
+                        return Content("组织不存在");
+                    if (organizationTemp.Password == organizationPWD)
                     {
-                        userInfo = newUser;
-                        ViewData["UserInfo"] = userInfo;
-                        return Content("success");
+                        UserInfo newUser = new UserInfo() { PhoneNumber = phoneNumber, UserAuth = organizationTemp.DefaultUserAuth, UserName = userName, UserPwd = passWord, Organization = organizationTemp, };
+                        if (ServiceSessionFactory.ServiceSession.UserInfoService.AddEntity(newUser))
+                        {
+                            userInfo = newUser;
+                            ViewData["UserInfo"] = userInfo;
+                            return Content("success");
+                        }
+                        else
+                            return Content("用户创建失败，请稍后重试");
                     }
                     else
-                        return Content("用户创建失败，请稍后重试");
+                    {
+                        return Content("组织密码错误");
+                    }
                 }
-                else
+                catch
                 {
-                    return Content("组织密码错误");
+                    return Content("组织不存在");
                 }
             }
         }
@@ -155,6 +163,64 @@ namespace ServerForVSTO.Controllers
                 else
                     return Content("Success");
             }
+        }
+
+        public ActionResult ModOrganizationInfo()
+        {
+            string name = Request["Name"];
+            string pwd = Request["PWD"];
+            string auth = Request["Auth"];
+            UserAuth userAuth;
+            if (auth == "管理员")
+                userAuth = UserAuth.Admin;
+            else
+                userAuth = auth == "可上传" ? UserAuth.Uploader : UserAuth.User;
+            OrganizationInfo organization = userInfo.Organization;
+            organization.OrganizationName = name;
+            organization.Password = pwd;
+            organization.DefaultUserAuth = userAuth;
+            ServiceSessionFactory.ServiceSession.OrganizationInfoService.EditEntity(organization);
+            return Content("success");
+        }
+
+        public ActionResult RemoveFromOrganization(string userID)
+        {
+            if (userInfo.UserAuth != UserAuth.Admin)
+                return Content("权限不足");
+            if (int.TryParse(userID, out int id))
+            {
+                UserInfo user = ServiceSessionFactory.ServiceSession.UserInfoService.LoadEntity(u => u.ID == id).FirstOrDefault();
+                if (user == null)
+                    return Content("参数错误");
+                user.Organization = null;
+                ServiceSessionFactory.ServiceSession.UserInfoService.EditEntity(user);
+                return Content("success");
+            }
+            else
+                return Content("参数错误");
+        }
+
+        public ActionResult ChangeUserFromOrganization()
+        {
+            string auth = Request["Auth"];
+            string id = Request["id"];
+            if (userInfo.UserAuth != UserAuth.Admin)
+                return Content("权限不足");
+            if (auth == null || id == null)
+                return Content("参数错误");
+            if(int.TryParse(id,out int uid))
+            {
+                UserAuth userAuth;
+            if (auth == "管理员")
+                userAuth = UserAuth.Admin;
+            else
+                userAuth = auth == "可上传" ? UserAuth.Uploader : UserAuth.User;
+                UserInfo user = ServiceSessionFactory.ServiceSession.UserInfoService.LoadEntity(u => u.ID == uid).FirstOrDefault();
+                user.UserAuth = userAuth;
+                ServiceSessionFactory.ServiceSession.UserInfoService.EditEntity(user);
+                return Content("success");
+            }
+            return Content("参数错误");
         }
     }
 }

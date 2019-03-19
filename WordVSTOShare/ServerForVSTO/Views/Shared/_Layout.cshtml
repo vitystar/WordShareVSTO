@@ -148,6 +148,7 @@
                         <li><a href="javascript:void(0)" class="templetType" id="image">图片素材</a></li>
                         <li><a href="javascript:void(0)" class="templetType" id="video">视频素材</a></li>
                         <li><a href="javascript:void(0)" class="templetType" id="audio">音频素材</a></li>
+                        <li><a href="javascript:void(0)">插件下载</a></li>
                     </ul>
                     @{
                         if (userInfo == null)
@@ -243,12 +244,12 @@
                         </div>
                         <br />
                         <div class="input-append">
-                            <input type="email" class="form-control" id="email" name="organizationID" placeholder="组织ID" />
+                            <input type="text" class="form-control" id="organizationID" name="organizationID" placeholder="组织ID" />
                             <span class="add-on" id="emailMsg">请输入组织ID(选填)</span>
                         </div>
                         <br />
                         <div class="input-append">
-                            <input type="text" class="form-control input-block-level" id="address" name="organizationPWD" placeholder="组织密码" />
+                            <input type="password" class="form-control input-block-level" id="organizationPWD" name="organizationPWD" placeholder="组织密码" />
                             <span class="add-on" id="addressMsg">请输入组织密码(选填)</span>
                         </div>
                     </div>
