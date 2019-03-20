@@ -79,7 +79,7 @@ namespace ServerForVSTO.Controllers
                 }
                 catch
                 {
-                    return Content("组织不存在");
+                    return Content("组织格式错误");
                 }
             }
         }
@@ -138,6 +138,7 @@ namespace ServerForVSTO.Controllers
             else if (organization.Password == organizationPWD)
             {
                 userInfo.Organization = organization;
+                userInfo.UserAuth = organization.DefaultUserAuth;
                 ServiceSessionFactory.ServiceSession.UserInfoService.EditEntity(userInfo);
                 return Content("success");
             }
@@ -155,6 +156,7 @@ namespace ServerForVSTO.Controllers
             {
                 OrganizationInfo organization = userInfo.Organization;
                 userInfo.Organization = null;
+                userInfo.UserAuth = UserAuth.User;
                 ServiceSessionFactory.ServiceSession.UserInfoService.EditEntity(userInfo);
                 if (ServiceSessionFactory.ServiceSession.OrganizationInfoService.OrganizationDelete(organization))
                 {
@@ -192,8 +194,11 @@ namespace ServerForVSTO.Controllers
                 UserInfo user = ServiceSessionFactory.ServiceSession.UserInfoService.LoadEntity(u => u.ID == id).FirstOrDefault();
                 if (user == null)
                     return Content("参数错误");
-                user.Organization = null;
+                if (user.Organization != null)
+                    user.Organization = null;
+                user.UserAuth = UserAuth.User;
                 ServiceSessionFactory.ServiceSession.UserInfoService.EditEntity(user);
+                userInfo = ServiceSessionFactory.ServiceSession.UserInfoService.LoadEntity(u => u.ID == userInfo.ID).FirstOrDefault();
                 return Content("success");
             }
             else
@@ -208,13 +213,13 @@ namespace ServerForVSTO.Controllers
                 return Content("权限不足");
             if (auth == null || id == null)
                 return Content("参数错误");
-            if(int.TryParse(id,out int uid))
+            if (int.TryParse(id, out int uid))
             {
                 UserAuth userAuth;
-            if (auth == "管理员")
-                userAuth = UserAuth.Admin;
-            else
-                userAuth = auth == "可上传" ? UserAuth.Uploader : UserAuth.User;
+                if (auth == "管理员")
+                    userAuth = UserAuth.Admin;
+                else
+                    userAuth = auth == "可上传" ? UserAuth.Uploader : UserAuth.User;
                 UserInfo user = ServiceSessionFactory.ServiceSession.UserInfoService.LoadEntity(u => u.ID == uid).FirstOrDefault();
                 user.UserAuth = userAuth;
                 ServiceSessionFactory.ServiceSession.UserInfoService.EditEntity(user);

@@ -46,17 +46,20 @@
 @*组织成员删除逻辑*@
 <script>
     $(function () {
-        $('.delUser').click(function () {
-            $.post('/AJAXInterface/RemoveFromOrganization', {"userID":this.id}, function (data) {
-                if (data == "success")
-                    window.location.reload();
-                else
-                    alert(data);
+        $('.delUser').click(
+            function () {
+                if (confirm("确定删除该成员?"))
+                    $.post('/AJAXInterface/RemoveFromOrganization', { "userID": this.id }, function (data) {
+                        if (data == "success")
+                            window.location.reload();
+                        else
+                            alert(data);
+                    });
             });
-        });
     });
 </script>
 
+@*组织成员修改逻辑*@
 <script>
     $(function () {
         $('.saveUser').click(function () {
