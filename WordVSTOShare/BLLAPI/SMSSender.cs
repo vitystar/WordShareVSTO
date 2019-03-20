@@ -1,0 +1,45 @@
+﻿using Aliyun.Acs.Core;
+using Aliyun.Acs.Core.Exceptions;
+using Aliyun.Acs.Core.Http;
+using Aliyun.Acs.Core.Profile;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace BLLAPI
+{
+    public class SMSSender
+    {
+        public void SendSMS(string phoneNumber,string signName,string templateCode)
+        {
+
+            IClientProfile profile = DefaultProfile.GetProfile("default", ConfigurationManager.AppSettings["accessKeyId"], ConfigurationManager.AppSettings["accessSecret"]);
+            DefaultAcsClient client = new DefaultAcsClient(profile);
+            CommonRequest request = new CommonRequest();
+            request.Method = MethodType.POST;
+            request.Domain = "dysmsapi.aliyuncs.com";
+            request.Version = "2017-05-25";
+            request.Action = "SendSms";
+            // request.Protocol = ProtocolType.HTTP;
+            request.AddQueryParameters("PhoneNumbers", phoneNumber);
+            request.AddQueryParameters("SignName", ConfigurationManager.AppSettings[signName]);
+            request.AddQueryParameters("TemplateCode", ConfigurationManager.AppSettings[templateCode]);
+            try
+            {
+                CommonResponse response = client.GetCommonResponse(request);
+                Console.WriteLine(System.Text.Encoding.Default.GetString(response.HttpResponse.Content));
+            }
+            catch (ServerException e)
+            {
+                Console.WriteLine(e);
+            }
+            catch (ClientException e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+    }
+}
