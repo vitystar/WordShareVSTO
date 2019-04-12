@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 
 namespace BLLAPI
 {
-    public class SMSSender
+    public class SMSSender : ISMSSender
     {
-        public void SendSMS(string phoneNumber,string signName,string templateCode)
+        public void SendSMS(string phoneNumber, TemplateCode templateCode, string signName = "signName")
         {
 
             IClientProfile profile = DefaultProfile.GetProfile("default", ConfigurationManager.AppSettings["accessKeyId"], ConfigurationManager.AppSettings["accessSecret"]);
@@ -26,7 +26,7 @@ namespace BLLAPI
             // request.Protocol = ProtocolType.HTTP;
             request.AddQueryParameters("PhoneNumbers", phoneNumber);
             request.AddQueryParameters("SignName", ConfigurationManager.AppSettings[signName]);
-            request.AddQueryParameters("TemplateCode", ConfigurationManager.AppSettings[templateCode]);
+            request.AddQueryParameters("TemplateCode", ConfigurationManager.AppSettings[templateCode.ToString()]);
             try
             {
                 CommonResponse response = client.GetCommonResponse(request);

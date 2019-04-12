@@ -56,18 +56,18 @@ namespace WordVSTOShare
             if (true)
             {
                 FormFactory.UserMessage = new UserMessage() {UserName = UserName.Text,UserPassword =  PassWord.Text,IPAddress=IPAddr.Text};
-                try
-                {
-                    using(FileStream stream = new FileStream(FormFactory.MessagePath, FileMode.Open, FileAccess.ReadWrite))
+                //try
+                //{
+                    using(FileStream stream = new FileStream(FormFactory.MessagePath, FileMode.OpenOrCreate, FileAccess.ReadWrite))
                     {
                         BinaryFormatter bf = new BinaryFormatter();
                         bf.Serialize(stream, FormFactory.UserMessage);
                     }
-                }
-                catch
-                {
-                    MessageBox.Show("保存失败，请检查权限");
-                }
+                //}
+                //catch
+                //{
+                //    MessageBox.Show("保存失败，请检查权限");
+                //}
             }
 
             if (Regex.IsMatch(ipaddr.Trim(), @"(?=(\b|\D))(((\d{1,2})|(1\d{1,2})|(2[0-4]\d)|(25[0-5]))\.){3}((\d{1,2})|(1\d{1,2})|(2[0-4]\d)|(25[0-5]))(?=(\b|\D))"))

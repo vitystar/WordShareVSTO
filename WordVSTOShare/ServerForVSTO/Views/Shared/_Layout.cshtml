@@ -108,6 +108,17 @@
         }
     </script>
 
+    @*修改信息回调函数*@
+    <script>
+        function afterChg(data) {
+            if (data == "success") {
+                window.location.reload();
+            } else {
+                alert(data);
+            }
+        }
+    </script>
+
     @*登出逻辑*@
     <script>
         $(function () {
@@ -166,7 +177,7 @@
                                 <li class="dropdown">
                                     <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">@userInfo.UserName</a>
                                     <ul class="dropdown-menu">
-                                        <li><a href="#">个人信息</a></li>
+                                        <li><a id="modal-160003" href="#modal-container-160003" role="button" data-toggle="modal">个人信息</a></li>
                                         <li><a href="/Home/OrganizationManager">组织信息</a></li>
                                         <li><a href="#">模板管理</a></li>
                                         <li><a href="javascript:void(0)" id="logOut">退出登录</a></li>
@@ -183,7 +194,7 @@
     </div>
 
 
-
+    @*遮罩窗体*@
     <div class="container body-content">
         @RenderBody()
         <hr />
@@ -198,7 +209,6 @@
             @using (Ajax.BeginForm("UserLogin", "AJAXInterface", new { }, new AjaxOptions() { HttpMethod = "post", OnSuccess = "afterLogin" }, new { id = "loginForm" }))
             {
                 <div class="modal-body">
-                    <legend contenteditable="true">登录</legend>
                     <label contenteditable="true">用户名</label>
                     <input placeholder="用户名" type="text" name="username" id="usernameLog" class="input-block-level" required />
                     <label contenteditable="true">密码</label>
@@ -244,7 +254,7 @@
                         </div>
                         <br />
                         <div class="input-append">
-                            <input type="text" class="form-control" id="organizationID" name="organizationID" placeholder="组织ID" />
+                            <input type="text" class="form-control  input-block-level" id="organizationID" name="organizationID" placeholder="组织ID" />
                             <span class="add-on" id="emailMsg">请输入组织ID(选填)</span>
                         </div>
                         <br />
@@ -260,11 +270,52 @@
                 </div>
             }
 
-            <footer>
-                <p>&copy; @DateTime.Now.Year - word模板分享</p>
-            </footer>
         </div>
 
+        @*修改信息表单*@
+        @if (userInfo != null)
+        {
+            <div id="modal-container-160003" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="myModalLabel">
+                        修改信息
+                    </h3>
+                </div>
+                @using (Ajax.BeginForm("UserChg", "AJAXInterface", new { }, new AjaxOptions() { HttpMethod = "post", OnSuccess = "afterChg" }, new { id = "ChgForm" }))
+                {
+                    <div class="modal-body">
+                        <div class="form-group" id="divForm">
+                            <div class="input-append">
+                                <input type="text" class="form-control input-block-level" name="username" placeholder="用户名" value="@userInfo.UserName" required="">
+                                <span class="add-on" id="usernameMsg">用户名</span>
+                            </div>
+                            <br>
+                            <div class="input-append">
+                                <input type="password" class="form-control input-block-level" name="userPWD" placeholder="密码">
+                                <span class="add-on" id="pwdMsg">密码</span>
+                            </div>
+                            <br>
+                            <div class="input-append">
+                                <input type="password" class="form-control input-block-level" name="pwdValidate" placeholder="确认密码">
+                                <span class="add-on" id="pwdValidateMsg">确认密码</span>
+                            </div>
+                            <br>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-primary" type="submit" id="btnSub">修改信息</button>
+                            <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+
     </div>
+
+
+    <footer>
+        <p>&copy; @DateTime.Now.Year - word模板分享</p>
+    </footer>
 </body>
 </html>

@@ -9,6 +9,7 @@ using Microsoft.Office.Tools.Word;
 using System.IO;
 using System.Windows.Forms;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Security.AccessControl;
 
 namespace WordVSTOShare
 {
@@ -21,7 +22,15 @@ namespace WordVSTOShare
         {
             app = Globals.ThisAddIn.Application;
             FormFactory.MessagePath = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)+@"\wordTemplet\mymessage.wtp";
- 
+
+            InheritanceFlags flags = InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit;
+
+
+
+            //FileInfo fileInfo = new FileInfo(FormFactory.MessagePath);
+            //FileSecurity fileACL = fileInfo.GetAccessControl();
+            //fileACL.AddAccessRule(new FileSystemAccessRule(Environment.UserName, FileSystemRights.FullControl, AccessControlType.Allow));
+            //fileInfo.SetAccessControl(fileACL);
         }
         
 

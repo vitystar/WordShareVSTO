@@ -227,5 +227,33 @@ namespace ServerForVSTO.Controllers
             }
             return Content("参数错误");
         }
+
+        public ActionResult UserChg(string username, string userPWD, string pwdValidate)
+        {
+            bool isModed = false;
+            if (!string.IsNullOrWhiteSpace(userPWD))
+                if (userPWD != pwdValidate)
+                    return Content("密码不一致");
+                else
+                {
+                    userInfo.UserPwd = userPWD;
+                    isModed = true;
+                }
+
+            if (!string.IsNullOrWhiteSpace(username))
+                if (username != userInfo.UserName)
+                {
+                    if (ServiceSessionFactory.ServiceSession.UserInfoService.LoadEntity(u => u.UserName == username).Count() > 0)
+                        return Content("用户名不可用");
+                    userInfo.UserName = username;
+                    isModed = true;
+                }
+            if (isModed)
+            {
+                userInfo.Organization = ServiceSessionFactory.ServiceSession.UserInfoService.LoadEntity(u => u.ID == userInfo.ID).FirstOrDefault().Organization;
+                ServiceSessionFactory.ServiceSession.UserInfoService.EditEntity(userInfo);
+            }
+            return Content("success");
+        }
     }
 }
