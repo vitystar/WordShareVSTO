@@ -21,16 +21,6 @@ namespace WordVSTOShare
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
             app = Globals.ThisAddIn.Application;
-            FormFactory.MessagePath = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)+@"\wordTemplet\mymessage.wtp";
-
-            InheritanceFlags flags = InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit;
-
-
-
-            //FileInfo fileInfo = new FileInfo(FormFactory.MessagePath);
-            //FileSecurity fileACL = fileInfo.GetAccessControl();
-            //fileACL.AddAccessRule(new FileSystemAccessRule(Environment.UserName, FileSystemRights.FullControl, AccessControlType.Allow));
-            //fileInfo.SetAccessControl(fileACL);
         }
         
 

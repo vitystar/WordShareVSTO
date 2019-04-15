@@ -177,6 +177,7 @@
     <Compile Include="Controllers\AJAXInterfaceController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\JsonAPIController.cs" />
     <Compile Include="Models\ScreenResultModel.cs" />
     <Compile Include="Controllers\ServiceSessionFactory.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
@@ -184,6 +185,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\TempletType.cs" />
+    <Compile Include="Models\UserMsg.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -257,6 +259,7 @@
     <Folder Include="Areas\Factory\Views\Shared\" />
     <Folder Include="Views\AJAXInterface\" />
     <Folder Include="Views\Base\" />
+    <Folder Include="Views\JsonAPI\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
