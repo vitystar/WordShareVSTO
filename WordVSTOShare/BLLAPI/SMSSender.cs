@@ -18,11 +18,13 @@ namespace BLLAPI
 
             IClientProfile profile = DefaultProfile.GetProfile("default", ConfigurationManager.AppSettings["accessKeyId"], ConfigurationManager.AppSettings["accessSecret"]);
             DefaultAcsClient client = new DefaultAcsClient(profile);
-            CommonRequest request = new CommonRequest();
-            request.Method = MethodType.POST;
-            request.Domain = "dysmsapi.aliyuncs.com";
-            request.Version = "2017-05-25";
-            request.Action = "SendSms";
+            CommonRequest request = new CommonRequest
+            {
+                Method = MethodType.POST,
+                Domain = "dysmsapi.aliyuncs.com",
+                Version = "2017-05-25",
+                Action = "SendSms"
+            };
             // request.Protocol = ProtocolType.HTTP;
             request.AddQueryParameters("PhoneNumbers", phoneNumber);
             request.AddQueryParameters("SignName", ConfigurationManager.AppSettings[signName]);
@@ -30,7 +32,7 @@ namespace BLLAPI
             try
             {
                 CommonResponse response = client.GetCommonResponse(request);
-                Console.WriteLine(System.Text.Encoding.Default.GetString(response.HttpResponse.Content));
+                Console.WriteLine(Encoding.Default.GetString(response.HttpResponse.Content));
             }
             catch (ServerException e)
             {
