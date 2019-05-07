@@ -17,7 +17,11 @@ namespace WordVSTOShare
 
         private void Templet_Load(object sender, RibbonUIEventArgs e)
         {
-
+            if (FileHelper.FileExist(userFileName))
+            {
+                FormFactory.UserMessage = FileHelper.ReadObject<UserMessage>(userFileName);
+                FormFactory.UserMessage = WebHelper.GetJson<UserMessage, UserMessage>(FormFactory.UserMessage, userFileName);
+            }
         }
         
 
@@ -28,11 +32,15 @@ namespace WordVSTOShare
                 MessageBox.Show("无服务器信息或身份验证未通过");
                 return;
             }
+            FormFactory.TempletForm = new TempletList(cmbDownloadType.Text, cmbDownloadAccess.Text);
             FormFactory.TempletForm.Show();
         }
 
         private void btnSaveSetting_Click(object sender, RibbonControlEventArgs e)
         {
+            FormFactory.UserMessage = WebHelper.GetJson<UserMessage, UserMessage>(new UserMessage() { UserName = txtName.Text, UserPassword = PassWord.Text }, IPAddr.Text + @"/GetUser");
+            FormFactory.UserMessage.IPAddress = IPAddr.Text;
+            FileHelper.SaveObject(FormFactory.UserMessage, userFileName);
         }
 
         private void btnServerWeb_Click(object sender, RibbonControlEventArgs e)

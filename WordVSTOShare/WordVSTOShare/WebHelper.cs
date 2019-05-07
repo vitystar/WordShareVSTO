@@ -28,7 +28,5 @@ namespace WordVSTOShare
             string result = webClient.UploadString(JsonConvert.SerializeObject(obj), uri);
             return JsonConvert.DeserializeObject<T>(result);
         }
-
-
     }
 }

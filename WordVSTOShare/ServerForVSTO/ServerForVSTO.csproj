@@ -178,6 +178,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JsonAPIController.cs" />
+    <Compile Include="Models\RequestType.cs" />
     <Compile Include="Models\ScreenResultModel.cs" />
     <Compile Include="Controllers\ServiceSessionFactory.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
@@ -190,10 +191,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
+    <Content Include="Content\addon\WordVSTOShare.dll" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\image\a.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -251,6 +254,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\OrganizationManager.cshtml" />
     <Content Include="Views\Home\OrganizationRegister.cshtml" />
+    <Content Include="Views\Home\AddonDownload.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

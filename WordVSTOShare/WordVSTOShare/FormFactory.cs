@@ -18,9 +18,13 @@ namespace WordVSTOShare
             {
                 if (_templetForm == null)
                 {
-                    _templetForm = new TempletList();
+                    _templetForm = new TempletList("文档模板", "公共模板");
                 }
                 return _templetForm;
+            }
+            set
+            {
+                _templetForm = value;
             }
         }
     }

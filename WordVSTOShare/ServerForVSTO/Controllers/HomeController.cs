@@ -196,6 +196,11 @@ namespace ServerForVSTO.Controllers
             return Redirect("/Home/Index");
         }
 
+        public ActionResult AddonDownload()
+        {
+            return View();
+        }
+
         /// <summary>
         /// 从lambda动态条件创建泛型lambda的where表达式
         /// </summary>

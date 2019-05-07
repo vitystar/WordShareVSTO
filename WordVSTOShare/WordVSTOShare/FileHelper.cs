@@ -43,5 +43,12 @@ namespace WordVSTOShare
             }
         }
 
+        /// <summary>
+        /// 判断文件是否存在
+        /// </summary>
+        /// <param name="fileName">文件名</param>
+        /// <returns>文件是否存在</returns>
+        public static bool FileExist(string fileName) => File.Exists(savePath + @"\" + fileName);
+
     }
 }
