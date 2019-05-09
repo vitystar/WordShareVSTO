@@ -11,6 +11,8 @@
 @{
     int index = Convert.ToInt32(ViewData["pageIndex"]);
 }
+
+
 <div class="container-fluid">
     <div class="row-fluid">
         <div class="span12">
@@ -121,6 +123,8 @@
 
             </div>
 
+            <br />
+
             @*模板列表*@
             <div class="row-fluid">
                 <div class="span12">
@@ -138,7 +142,7 @@
                                 }
                                 <li class="span4">
                                     <div class="thumbnail">
-                                        <img alt="300x200" src="@templet.ImagePath" />
+                                        <img alt="300x200" class="img-responsive img-preview" src="@templet.ImagePath"/>
                                         <div class="caption">
                                             <h3>
                                                 @templet.TempletName

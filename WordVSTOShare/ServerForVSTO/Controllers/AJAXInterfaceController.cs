@@ -130,20 +130,27 @@ namespace ServerForVSTO.Controllers
 
         public ActionResult AddOrganization()
         {
-            Guid organizationID = new Guid(Request["organizationID"]);
-            string organizationPWD = Request["organizationPWD"];
-            var organization = ServiceSessionFactory.ServiceSession.OrganizationInfoService.LoadEntity(o => o.ID == organizationID).FirstOrDefault();
-            if (organization == null)
-                return Content("该组织不存在");
-            else if (organization.Password == organizationPWD)
+            try
             {
-                userInfo.Organization = organization;
-                userInfo.UserAuth = organization.DefaultUserAuth;
-                ServiceSessionFactory.ServiceSession.UserInfoService.EditEntity(userInfo);
-                return Content("success");
-            }
+                Guid organizationID = new Guid(Request["organizationID"]);
+                string organizationPWD = Request["organizationPWD"];
+                var organization = ServiceSessionFactory.ServiceSession.OrganizationInfoService.LoadEntity(o => o.ID == organizationID).FirstOrDefault();
+                if (organization == null)
+                    return Content("该组织不存在");
+                else if (organization.Password == organizationPWD)
+                {
+                    userInfo.Organization = organization;
+                    userInfo.UserAuth = organization.DefaultUserAuth;
+                    ServiceSessionFactory.ServiceSession.UserInfoService.EditEntity(userInfo);
+                    return Content("success");
+                }
 
-            return Content("组织密码错误");
+                return Content("组织密码错误");
+            }
+            catch
+            {
+                return Content("组织格式不正确");
+            }
         }
 
         public ActionResult ExitOrganization()

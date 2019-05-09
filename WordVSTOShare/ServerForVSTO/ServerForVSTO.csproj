@@ -196,7 +196,10 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Excel\e1.png" />
     <Content Include="Content\image\a.jpg" />
+    <Content Include="Content\PPT\p1.jpg" />
+    <Content Include="Content\Word\w1.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -222,6 +225,10 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
     <Content Include="Areas\Factory\Views\web.config" />
+    <Content Include="Content\Word\w1.docx" />
+    <Content Include="Content\Excel\e1.xltx" />
+    <Content Include="Content\PPT\p1.potx" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Content\bootstrap\css\bootstrap-responsive.css" />
     <Content Include="Content\bootstrap\css\bootstrap-responsive.min.css" />
@@ -261,6 +268,9 @@
     <Folder Include="Areas\Factory\Controllers\" />
     <Folder Include="Areas\Factory\Models\" />
     <Folder Include="Areas\Factory\Views\Shared\" />
+    <Folder Include="Content\Audio\" />
+    <Folder Include="Content\Img\" />
+    <Folder Include="Content\Video\" />
     <Folder Include="Views\AJAXInterface\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\JsonAPI\" />

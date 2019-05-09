@@ -134,7 +134,7 @@ namespace ServerForVSTO.Controllers
 
             #region 处理返回值
             ViewData["Templets"] = templets;
-            int pageCount = Convert.ToInt32(Math.Ceiling((double)(totalCount / 6)));
+            int pageCount = Convert.ToInt32(Math.Ceiling(((double)totalCount / 6)));
             pageIndex = pageIndex > pageCount ? pageCount : pageIndex;
             ViewData["pageCount"] = pageCount;
             ViewData["pageIndex"] = pageIndex;
