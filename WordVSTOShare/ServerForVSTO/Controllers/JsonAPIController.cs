@@ -18,7 +18,10 @@ namespace ServerForVSTO.Controllers
             UserInfo userInfo = ServiceSessionFactory.ServiceSession.UserInfoService.LoadEntity(u => u.UserName == user.UserName).FirstOrDefault();
             if (userInfo != null)
                 if (userInfo.UserPwd == userInfo.UserPwd)
-                    return Json(userInfo);
+                {
+                    HttpRuntime.Cache.Get()
+                    return Json(new UserMsg() { UserName = userInfo.UserName, UserPassword = userInfo.UserPwd });
+                }
                 else
                     return Content("密码错误");
             else
@@ -31,19 +34,19 @@ namespace ServerForVSTO.Controllers
             switch (temp)
             {
                 case TempletType.WordTemplet:
-                    return Json(ServiceSessionFactory.ServiceSession.WordTempletService.LoadEntity(w => w.User.UserName == type.user.UserName && w.Accessibility.ToString() == type.tmpAccess));
+                    return Json(ServiceSessionFactory.ServiceSession.WordTempletService.LoadEntity(w => w.User.UserName == type.user.UserName && (w.Accessibility.ToString() == type.tmpAccess)).ToArray());
                 case TempletType.ExcelTemplet:
-                    return Json(ServiceSessionFactory.ServiceSession.ExcelService.LoadEntity(w => w.User.UserName == type.user.UserName && w.Accessibility.ToString() == type.tmpAccess));
+                    return Json(ServiceSessionFactory.ServiceSession.ExcelService.LoadEntity(w => w.User.UserName == type.user.UserName && w.Accessibility.ToString() == type.tmpAccess).ToArray());
                 case TempletType.PPTTemplet:
-                    return Json(ServiceSessionFactory.ServiceSession.PPTService.LoadEntity(w => w.User.UserName == type.user.UserName && w.Accessibility.ToString() == type.tmpAccess));
+                    return Json(ServiceSessionFactory.ServiceSession.PPTService.LoadEntity(w => w.User.UserName == type.user.UserName && w.Accessibility.ToString() == type.tmpAccess).ToArray());
                 case TempletType.ImageTemplet:
-                    return Json(ServiceSessionFactory.ServiceSession.ImageService.LoadEntity(w => w.User.UserName == type.user.UserName && w.Accessibility.ToString() == type.tmpAccess));
+                    return Json(ServiceSessionFactory.ServiceSession.ImageService.LoadEntity(w => w.User.UserName == type.user.UserName && w.Accessibility.ToString() == type.tmpAccess).ToArray());
                 case TempletType.VideoTemplet:
-                    return Json(ServiceSessionFactory.ServiceSession.VideoService.LoadEntity(w => w.User.UserName == type.user.UserName && w.Accessibility.ToString() == type.tmpAccess));
+                    return Json(ServiceSessionFactory.ServiceSession.VideoService.LoadEntity(w => w.User.UserName == type.user.UserName && w.Accessibility.ToString() == type.tmpAccess).ToArray());
                 case TempletType.AudioTemplet:
-                    return Json(ServiceSessionFactory.ServiceSession.AudioService.LoadEntity(w => w.User.UserName == type.user.UserName && w.Accessibility.ToString() == type.tmpAccess));
+                    return Json(ServiceSessionFactory.ServiceSession.AudioService.LoadEntity(w => w.User.UserName == type.user.UserName && w.Accessibility.ToString() == type.tmpAccess).ToArray());
                 default:
-                    return Json(ServiceSessionFactory.ServiceSession.WordTempletService.LoadEntity(w => w.User.UserName == type.user.UserName && w.Accessibility.ToString() == type.tmpAccess));
+                    return Json(ServiceSessionFactory.ServiceSession.WordTempletService.LoadEntity(w => w.User.UserName == type.user.UserName && w.Accessibility.ToString() == type.tmpAccess).ToArray());
             }
         }
     }

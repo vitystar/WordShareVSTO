@@ -5,7 +5,7 @@ using System.Web;
 
 namespace ServerForVSTO.Models
 {
-    public class UserMsg
+    public class UserMsg:Token
     {
         public string UserName { get; set; }
         public string UserPassword { get; set; }

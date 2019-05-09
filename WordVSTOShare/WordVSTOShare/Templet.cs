@@ -7,6 +7,8 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Microsoft.Office.Tools.Ribbon;
+using WordVSTOShare.Model;
+using WordVSTOShare.util;
 
 namespace WordVSTOShare
 {
@@ -22,6 +24,8 @@ namespace WordVSTOShare
                 FormFactory.UserMessage = FileHelper.ReadObject<UserMessage>(userFileName);
                 FormFactory.UserMessage = WebHelper.GetJson<UserMessage, UserMessage>(FormFactory.UserMessage, userFileName);
             }
+            else
+                IPAddr.Text = "http://office.xiaowenyu.top";
         }
         
 
@@ -38,7 +42,7 @@ namespace WordVSTOShare
 
         private void btnSaveSetting_Click(object sender, RibbonControlEventArgs e)
         {
-            FormFactory.UserMessage = WebHelper.GetJson<UserMessage, UserMessage>(new UserMessage() { UserName = txtName.Text, UserPassword = PassWord.Text }, IPAddr.Text + @"/GetUser");
+            FormFactory.UserMessage = WebHelper.GetJson<UserMessage, UserMessage>(new UserMessage() { UserName = UserName.Text, UserPassword = PassWord.Text }, IPAddr.Text + @"/JsonAPI/GetUser");
             FormFactory.UserMessage.IPAddress = IPAddr.Text;
             FileHelper.SaveObject(FormFactory.UserMessage, userFileName);
         }
@@ -55,7 +59,7 @@ namespace WordVSTOShare
 
         private void btnOfficalWeb_Click(object sender, RibbonControlEventArgs e)
         {
-            System.Diagnostics.Process.Start("iexplore.exe", "word.xwyhome.top");
+            System.Diagnostics.Process.Start("iexplore.exe", "office.xwyhome.top");
         }
 
         private void btnUpload_Click(object sender, RibbonControlEventArgs e)
