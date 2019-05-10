@@ -7,7 +7,7 @@ namespace ServerForVSTO.Models
 {
     public class StateMessage
     {
-        public string StateCode { get; set; }
+        public StateCode StateCode { get; set; }
         public string StateDescription { get; set; }
     }
 }

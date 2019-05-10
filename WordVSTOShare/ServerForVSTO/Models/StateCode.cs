@@ -7,6 +7,12 @@ namespace ServerForVSTO.Models
 {
     public enum StateCode
     {
-        normal = 800
+        request = 6,
+        normal = 8,
+        tokenError = 10,
+        nullToken = 11,
+        tokenCheckError = 12,
+        noUser = 15,
+        wrongPassword = 16,
     }
 }
