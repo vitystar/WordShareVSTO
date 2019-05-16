@@ -111,6 +111,12 @@ namespace ServerForVSTO.Controllers
             return Content(search);
         }
 
+        public ActionResult ModSearch(string search)
+        {
+            modifyScreenResult.Search = search;
+            return Content(search);
+        }
+
         public ActionResult TempletTypeChange(string templetType)
         {
             if (templetType == "video")
@@ -125,6 +131,23 @@ namespace ServerForVSTO.Controllers
                 screenResult.TempletType = TempletType.AudioTemplet;
             else
                 screenResult.TempletType = TempletType.WordTemplet;
+            return Content(templetType);
+        }
+
+        public ActionResult ModTempletType(string templetType)
+        {
+            if (templetType == "video")
+                modifyScreenResult.TempletType = TempletType.VideoTemplet;
+            else if (templetType == "ppt")
+                modifyScreenResult.TempletType = TempletType.PPTTemplet;
+            else if (templetType == "excel")
+                modifyScreenResult.TempletType = TempletType.ExcelTemplet;
+            else if (templetType == "image")
+                modifyScreenResult.TempletType = TempletType.ImageTemplet;
+            else if (templetType == "audio")
+                modifyScreenResult.TempletType = TempletType.AudioTemplet;
+            else
+                modifyScreenResult.TempletType = TempletType.WordTemplet;
             return Content(templetType);
         }
 
@@ -233,6 +256,70 @@ namespace ServerForVSTO.Controllers
                 return Content("success");
             }
             return Content("参数错误");
+        }
+
+        public ActionResult DeleteTemplet(string templetID)
+        {
+            BaseTemplet b;
+            int id;
+            if (!int.TryParse(templetID, out id))
+                return Content("参数格式错误");
+            switch (modifyScreenResult.TempletType)
+            {
+                case TempletType.WordTemplet:
+                    b = ServiceSessionFactory.ServiceSession.WordTempletService.LoadEntity(w => w.ID == id).FirstOrDefault();
+                    break;
+                case TempletType.ExcelTemplet:
+                    b = ServiceSessionFactory.ServiceSession.ExcelService.LoadEntity(w => w.ID == id).FirstOrDefault();
+                    break;
+                case TempletType.PPTTemplet:
+                    b = ServiceSessionFactory.ServiceSession.PPTService.LoadEntity(w => w.ID == id).FirstOrDefault();
+                    break;
+                case TempletType.ImageTemplet:
+                    b = ServiceSessionFactory.ServiceSession.ImageService.LoadEntity(w => w.ID == id).FirstOrDefault();
+                    break;
+                case TempletType.VideoTemplet:
+                    b = ServiceSessionFactory.ServiceSession.VideoService.LoadEntity(w => w.ID == id).FirstOrDefault();
+                    break;
+                case TempletType.AudioTemplet:
+                    b = ServiceSessionFactory.ServiceSession.AudioService.LoadEntity(w => w.ID == id).FirstOrDefault();
+                    break;
+                default:
+                    b = ServiceSessionFactory.ServiceSession.WordTempletService.LoadEntity(w => w.ID == id).FirstOrDefault();
+                    break;
+            }
+
+            if(b.User.ID == userInfo.ID)
+            {
+                switch (modifyScreenResult.TempletType)
+                {
+                    case TempletType.WordTemplet:
+                        ServiceSessionFactory.ServiceSession.WordTempletService.DeleteEntity(new WordTemplet() { ID = id });
+                        break;
+                    case TempletType.ExcelTemplet:
+                        ServiceSessionFactory.ServiceSession.ExcelService.DeleteEntity(new ExcelTemplet() { ID = id });
+                        break;
+                    case TempletType.PPTTemplet:
+                        ServiceSessionFactory.ServiceSession.PPTService.DeleteEntity(new PPTTemplet() { ID = id });
+                        break;
+                    case TempletType.ImageTemplet:
+                        ServiceSessionFactory.ServiceSession.ImageService.DeleteEntity(new ImageTemplet() { ID = id });
+                        break;
+                    case TempletType.VideoTemplet:
+                        ServiceSessionFactory.ServiceSession.VideoService.DeleteEntity(new VideoTemplet() { ID = id });
+                        break;
+                    case TempletType.AudioTemplet:
+                        ServiceSessionFactory.ServiceSession.AudioService.DeleteEntity(new AudioTemplet() { ID = id });
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                return Content("权限不足");
+            }
+            return Content("success");
         }
 
         public ActionResult UserChg(string username, string userPWD, string pwdValidate)

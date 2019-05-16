@@ -201,6 +201,9 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Excel\e1.png" />
     <Content Include="Content\image\a.jpg" />
+    <Content Include="Content\image\addin.jpg" />
+    <Content Include="Content\image\setting.jpg" />
+    <Content Include="Content\image\option.jpg" />
     <Content Include="Content\PPT\p1.jpg" />
     <Content Include="Content\Word\w1.png" />
     <Content Include="favicon.ico" />
@@ -265,6 +268,7 @@
     <Content Include="Views\Home\OrganizationManager.cshtml" />
     <Content Include="Views\Home\OrganizationRegister.cshtml" />
     <Content Include="Views\Home\AddonDownload.cshtml" />
+    <Content Include="Views\Home\TempletManage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

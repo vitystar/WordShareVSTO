@@ -11,6 +11,7 @@ namespace ServerForVSTO.Controllers
 {
     public class HomeController : BaseController
     {
+
         public ActionResult Index()
         {
             #region 初始化变量
@@ -145,15 +146,12 @@ namespace ServerForVSTO.Controllers
 
         public ActionResult OrganizationManager()
         {
-            if (userInfo == null)
-                return Redirect("/Home/Index");
-
             return View();
         }
 
         public ActionResult OrganizationRegister()
         {
-            if (userInfo == null)
+            if (userInfo.Organization != null)
                 return Redirect("/Home/Index");
             return View();
         }
@@ -200,6 +198,71 @@ namespace ServerForVSTO.Controllers
         {
             return View();
         }
+
+        public ActionResult TempletManage()
+        {
+
+            if (userInfo == null)
+                return Redirect("/Home/Index");
+
+            #region 定义变量
+            IQueryable<BaseTemplet> templets;
+            int totalCount;
+            int pageIndex = 1;
+            int.TryParse(Request["pageIndex"], out pageIndex);
+            pageIndex = pageIndex < 1 ? 1 : pageIndex;
+            modifyScreenResult.PageIndex = pageIndex;
+            #endregion
+
+            #region 判断显示类型
+            switch (modifyScreenResult.TempletType)
+            {
+                case TempletType.WordTemplet:
+                    templets = ServiceSessionFactory.ServiceSession.WordTempletService.LoadEntityPage(pageIndex, 6, out totalCount, w => w.User.ID == userInfo.ID, w => w.TempletName, true);
+                    break;
+                case TempletType.ExcelTemplet:
+                    templets = ServiceSessionFactory.ServiceSession.ExcelService.LoadEntityPage(pageIndex, 6, out totalCount, w => w.User.ID == userInfo.ID, w => w.TempletName, true);
+                    break;
+                case TempletType.PPTTemplet:
+                    templets = ServiceSessionFactory.ServiceSession.PPTService.LoadEntityPage(pageIndex, 6, out totalCount, w => w.User.ID == userInfo.ID, w => w.TempletName, true);
+                    break;
+                case TempletType.ImageTemplet:
+                    templets = ServiceSessionFactory.ServiceSession.ImageService.LoadEntityPage(pageIndex, 6, out totalCount, w => w.User.ID == userInfo.ID, w => w.TempletName, true);
+                    break;
+                case TempletType.VideoTemplet:
+                    templets = ServiceSessionFactory.ServiceSession.VideoService.LoadEntityPage(pageIndex, 6, out totalCount, w => w.User.ID == userInfo.ID, w => w.TempletName, true);
+                    break;
+                case TempletType.AudioTemplet:
+                    templets = ServiceSessionFactory.ServiceSession.AudioService.LoadEntityPage(pageIndex, 6, out totalCount, w => w.User.ID == userInfo.ID, w => w.TempletName, true);
+                    break;
+                default:
+                    templets = ServiceSessionFactory.ServiceSession.WordTempletService.LoadEntityPage(pageIndex, 6, out totalCount, w => w.User.ID == userInfo.ID, w => w.TempletName, true);
+                    break;
+            }
+            #endregion
+
+            #region 判断搜索选项
+            if (!string.IsNullOrWhiteSpace(modifyScreenResult.Search))
+            {
+                templets = from t in templets
+                           where (t.TempletName.Contains(modifyScreenResult.Search))
+                           select t;
+                totalCount = templets.Count();
+            }
+            #endregion
+
+            #region 处理返回值
+            ViewData["Templets"] = templets;
+            int pageCount = Convert.ToInt32(Math.Ceiling(((double)totalCount / 6)));
+            pageIndex = pageIndex > pageCount ? pageCount : pageIndex;
+            ViewData["pageCount"] = pageCount;
+            ViewData["pageIndex"] = pageIndex;
+            #endregion
+
+            return View();
+        }
+
+
 
         /// <summary>
         /// 从lambda动态条件创建泛型lambda的where表达式

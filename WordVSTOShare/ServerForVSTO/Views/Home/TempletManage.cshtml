@@ -1,0 +1,152 @@
+﻿@using ModelAPI
+
+@{
+    int index = Convert.ToInt32(ViewData["pageIndex"]);
+}
+
+<script>
+    $(function () {
+        //提交搜索
+        $('#btnFind').click(function () {
+            $.post('/AJAXInterface/ModSearch', { 'search': $('#txtSearch').val() }, function (data) {
+                window.location.reload();
+            });
+        });
+        //模板筛选
+        $('.modType').click(function () {
+            $.post('/AJAXInterface/ModTempletType', { 'templetType': this.id }, function () {
+                window.location.reload();
+            });
+        });
+        //删除模板
+        $('.btnDel').click(function () {
+            $.post('/AJAXInterface/DeleteTemplet', { 'templetID': this.id }, function (data) {
+                if (data == 'success')
+                    window.location.reload();
+                else
+                    alert(data);
+            });
+        });
+    });
+</script>
+
+@*模板筛选*@
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span12">
+            <div class="row-fluid">
+                <div class="span9">
+                    <form class="form-search">
+                        <input class="input-medium search-query" type="text" id="txtSearch" />
+                        <button type="submit" id="btnFind" class="btn">查找</button>
+                    </form>
+                </div>
+                <div class="span3">
+                    <div class="btn-group">
+                        <button class="btn" disabled>模板类型</button> <button data-toggle="dropdown" class="btn dropdown-toggle"><span class="caret"></span></button>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="javascript:void(0)" class="modType" id="word">文档模板</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)" class="modType" id="ppt">幻灯片模板</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)" class="modType" id="excel">表格模板</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)" class="modType" id="image">图片素材</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)" class="modType" id="audio">音频素材</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)" class="modType" id="video">视频素材</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*内容展示*@
+<div class="row-fluid">
+    <div class="span12">
+        <ul class="thumbnails">
+            @{
+
+                IQueryable<BaseTemplet> templets = (IQueryable<BaseTemplet>)ViewData["Templets"];
+                int i = 0;
+                foreach (BaseTemplet templet in templets)
+                {
+                    if (i == 3)
+                    {
+                        @MvcHtmlString.Create("</ul>")
+                        @MvcHtmlString.Create("<ul class='thumbnails'>")
+                    }
+                    <li class="span4">
+                        <div class="thumbnail">
+                            <img alt="300x200" class="img-responsive img-preview" src="@templet.ImagePath" />
+                            <div class="caption">
+                                <h3>
+                                    @templet.TempletName
+                                </h3>
+                                <p>
+                                    @templet.TempletIntroduction
+                                </p>
+                                <p>
+                                    <a class="btn btn-primary btnMod" id="@templet.ID" href="#">修改</a>
+                                    <a class="btn btn-danger btnDel" id="@templet.ID" href="#">删除</a>
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </li>
+                    i++;
+                }
+            }
+        </ul>
+        <div class="pagination pagination-centered pagination-large">
+            <ul>
+                <li>
+                    <a href="/Home/Index?pageIndex=@(index-1)">上一页</a>
+                </li>
+                @{
+                    int count = (int)ViewData["pageCount"];
+                    int j, k;
+                    if (count < 10)
+                    {
+                        j = 1; k = count;
+                    }
+                    else if (index < 7)
+                    {
+                        j = 1; k = 10;
+                    }
+                    else if (index > count - 4)
+                    {
+                        j = count - 9; k = count;
+                    }
+                    else
+                    {
+                        j = index - 5; k = index + 4;
+                    }
+                    {
+                        for (i = j; i <= k; i++)
+                        {
+                            <li>
+                                <a href="~/Home/Index?pageIndex=@i" @if (i == index) { @MvcHtmlString.Create("class='active'") }>@i</a>
+                            </li>
+                        }
+                    }
+                }
+                <li>
+                    <a href="~/Home/Index?pageIndex=@((index+1)<=count?index+1:count)">下一页</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
