@@ -5,7 +5,7 @@ using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using System.Web;
 
-namespace ServerForVSTO.Controllers
+namespace ServerForVSTO.App_Common
 {
     public class ServiceSessionFactory
     {

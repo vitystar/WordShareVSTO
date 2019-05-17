@@ -14,5 +14,6 @@ namespace ServerForVSTO.Models
         tokenCheckError = 12,
         noUser = 15,
         wrongPassword = 16,
+        identityError = 18,
     }
 }
