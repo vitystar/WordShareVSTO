@@ -153,6 +153,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Common\Common.cs" />
     <Compile Include="App_Common\ValidateToken.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -191,8 +192,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JsonAPIController.cs" />
-    <Compile Include="Models\JWTToken.cs" />
-    <Compile Include="Models\RequestType.cs" />
+    <Compile Include="Models\JWTSetting.cs" />
     <Compile Include="Models\ScreenResultModel.cs" />
     <Compile Include="App_Common\ServiceSessionFactory.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
@@ -201,6 +201,7 @@
     </Compile>
     <Compile Include="Models\StateCode.cs" />
     <Compile Include="Models\StateMessage.cs" />
+    <Compile Include="Models\TempletForJson.cs" />
     <Compile Include="Models\TempletType.cs" />
     <Compile Include="Models\Token.cs" />
     <Compile Include="Models\UserForTemplet.cs" />

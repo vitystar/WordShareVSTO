@@ -216,6 +216,11 @@ namespace ServerForVSTO.Controllers
             return Content("success");
         }
 
+        /// <summary>
+        /// 管理员将用户从组织中删除
+        /// </summary>
+        /// <param name="userID">要删除的用户ID</param>
+        /// <returns>删除结果</returns>
         public ActionResult RemoveFromOrganization(string userID)
         {
             if (userInfo.UserAuth != UserAuth.Admin)

@@ -18,7 +18,7 @@ namespace ServerForVSTO.App_Common
     public class ValidateToken
     {
 
-        private readonly JWTToken setting = new JWTToken();
+        private readonly JWTSetting setting = new JWTSetting();
 
         public UserForTemplet CheckUser(string token)
         {
@@ -39,7 +39,7 @@ namespace ServerForVSTO.App_Common
                 // 接受解码后的token对象
                 ClaimsPrincipal principal = tokenHandler.ValidateToken(token, validationParameters, out SecurityToken securityToken);// 返回秘钥的主体对象，包含秘钥的所有相关信息
                 ClaimsIdentity identity = principal?.Identity as ClaimsIdentity; // 获取主声明标识
-                if (identity == null) return new UserForTemplet() { StateCode = StateCode.tokenCheckError, StateDescription = "无法获取主证明" };
+                if (identity == null) return new UserForTemplet() { StateCode = StateCode.tokenCheckError, StateDescription = "无法获取主证书" };
                 if (!identity.IsAuthenticated) return new UserForTemplet() { StateCode = StateCode.identityError, StateDescription = "身份验证失败" };
                 Claim userNameClaim = identity.FindFirst(ClaimTypes.Name); // 获取声明类型是ClaimTypes.Name的第一个声明
                 Claim userIDClaim = identity.FindFirst(ClaimTypes.Sid);

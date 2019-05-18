@@ -7,6 +7,6 @@ namespace ServerForVSTO.Models
 {
     public class Token:StateMessage
     {
-        public string Value { get; set; }
+        public string TokenValue { get; set; }
     }
 }

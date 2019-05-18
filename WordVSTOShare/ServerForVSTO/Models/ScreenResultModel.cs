@@ -10,8 +10,13 @@ namespace ServerForVSTO.Models
     /// <summary>
     /// 筛选选项
     /// </summary>
-    public class ScreenResultModel
+    public class ScreenResultModel:Token
     {
+
+        public ScreenResultModel()
+        {
+
+        }
 
         public ScreenResultModel(int pageIndex,string search,Accessibility accessibility,TempletType templetType)
         {

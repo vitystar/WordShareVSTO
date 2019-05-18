@@ -1,4 +1,5 @@
 ﻿using ModelAPI;
+using ServerForVSTO.App_Common;
 using ServerForVSTO.Models;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace ServerForVSTO.Controllers
         protected UserInfo userInfo;
         protected ScreenResultModel screenResult = new ScreenResultModel(1, "", Accessibility.Public, TempletType.WordTemplet);
         protected ScreenResultModel modifyScreenResult = new ScreenResultModel(1, "", Accessibility.Private, TempletType.WordTemplet);
+        protected Common util = new Common();
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {

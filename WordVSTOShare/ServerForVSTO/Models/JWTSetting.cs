@@ -6,7 +6,7 @@ using System.Web;
 
 namespace ServerForVSTO.Models
 {
-    public class JWTToken : StateMessage
+    public class JWTSetting : StateMessage
     {
         /// <summary>
         /// 证书颁发者
