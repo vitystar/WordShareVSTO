@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -23,7 +25,19 @@ namespace WordVSTOShare.util
         /// <returns>获得的对象实体</returns>
         public static T GetJson<S, T>(S obj, string uri) where T : class, new() where S : class, new()
         {
-            HttpWebRequest request = WebRequest.Create(uri) as HttpWebRequest;
+            HttpWebRequest request;
+            if (uri.StartsWith("https", StringComparison.OrdinalIgnoreCase))
+            {
+                ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback((object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors)=>true);
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Ssl3;
+                request = WebRequest.Create(uri) as HttpWebRequest;
+                request.ProtocolVersion = HttpVersion.Version10;
+
+            }
+            else
+            {
+                request = WebRequest.Create(uri) as HttpWebRequest;
+            }
             request.Method = "POST";
             request.ContentType = "application/json";
             //try

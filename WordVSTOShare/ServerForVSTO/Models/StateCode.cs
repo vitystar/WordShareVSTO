@@ -5,6 +5,9 @@ using System.Web;
 
 namespace ServerForVSTO.Models
 {
+    /// <summary>
+    /// 与客户端交互使用的状态码
+    /// </summary>
     public enum StateCode
     {
         request = 6,

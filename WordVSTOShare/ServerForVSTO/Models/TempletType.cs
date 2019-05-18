@@ -5,6 +5,9 @@ using System.Web;
 
 namespace ServerForVSTO.Models
 {
+    /// <summary>
+    /// 模板的类型。
+    /// </summary>
     public enum TempletType
     {
         WordTemplet,

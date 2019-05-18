@@ -6,6 +6,9 @@ using System.Web;
 
 namespace ServerForVSTO.Models
 {
+    /// <summary>
+    /// 证书相关信息，存储在config文件中
+    /// </summary>
     public class JWTSetting : StateMessage
     {
         /// <summary>
