@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace WordVSTOShare.Model
+namespace ServerForVSTO.Models
 {
+    /// <summary>
+    /// 验证用户信息使用的Token，由GetList颁发。除登陆外几乎每个请求都要验证Token以保证安全性
+    /// </summary>
     public class Token:StateMessage
     {
-        public int ID { get; set; }
-        public string Key { get; set; }
-        public DateTime CurrentTime { get; set; }
+        public string TokenValue { get; set; }
     }
 }

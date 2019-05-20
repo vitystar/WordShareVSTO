@@ -59,7 +59,7 @@ namespace ServerForVSTO.App_Common
 
             catch (Exception ex)
             {
-                return new UserForTemplet() { StateCode = StateCode.tokenCheckError, StateDescription = "token检查时出现内部错误" };
+                return new UserForTemplet() { StateCode = StateCode.tokenCheckError, StateDescription = $"token检查时出现内部错误:{ex.Message}" };
             }
         }
     }

@@ -1,4 +1,5 @@
-﻿using ModelAPI;
+﻿using BLLAPI;
+using ModelAPI;
 using ServerForVSTO.Models;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,13 @@ namespace ServerForVSTO.App_Common
 {
     public class Common
     {
+        /// <summary>
+        /// 通过筛选对象筛选数据信息
+        /// </summary>
+        /// <param name="user">用户信息</param>
+        /// <param name="screenResult">筛选选项</param>
+        /// <param name="totalCount">记录总数</param>
+        /// <returns>查询到的记录集合</returns>
         public IQueryable<BaseTemplet> GetScreenResult(UserForTemplet user, ScreenResultModel screenResult, out int totalCount)
         {
             #region 初始化变量
@@ -129,6 +137,49 @@ namespace ServerForVSTO.App_Common
             return templets;
         }
 
+
+        /// <summary>
+        /// 添加模板文件
+        /// </summary>
+        /// <typeparam name="T">模板类型</typeparam>
+        /// <param name="templet">模板实体</param>
+        /// <param name="request">请求对象，用于获取上传的文件</param>
+        /// <param name="service">数据服务对象</param>
+        /// <param name="templetType">模板类型，首字母大写</param>
+        /// <returns>插入结果</returns>
+        public StateMessage SaveTemplet<T>(TempletForJson templet, HttpRequest request, IBaseService<T> service, string templetType) where T : BaseTemplet, new()
+        {
+            UserForTemplet user = new ValidateToken().CheckUser(templet.TokenValue);//token验证用户
+            if (user.StateCode != StateCode.normal)
+                return new StateMessage() { StateCode = user.StateCode, StateDescription = user.StateDescription };
+            UserInfo userInfo = ServiceSessionFactory.ServiceSession.UserInfoService.LoadEntity(u => u.ID == user.ID).FirstOrDefault();//查询用户以写数据库
+            if (userInfo == null)
+                return new StateMessage() { StateCode = StateCode.noUser, StateDescription = "token所指示的用户不存在" };
+            if (userInfo.UserAuth != (UserAuth.Admin | UserAuth.Uploader))//验证用户权限
+                return new StateMessage() { StateCode = StateCode.permissionDenied, StateDescription = "权限不足" };
+            lock (ServiceSessionFactory.ServiceSession)//加锁防止请求并发时ID重复
+            {
+                int tempID = service.LoadEntity(w => true).Max(w => w.ID) + 1;//取数据库中最大的ID+1作为新模板的ID，
+                T word = new T()
+                {
+                    ID = tempID,
+                    TempletName = templet.TempletName,
+                    TempletIntroduction = templet.TempletIntroduction,
+                    Accessibility = templet.Accessibility,
+                    ImagePath = "/Content/" + templetType + "/w" + tempID + ".png",
+                    FilePath = "/Content/" + templetType + "/w" + tempID + ".docx",
+                    ModTime = DateTime.Now,
+                    User = userInfo,
+                    Organization = userInfo.Organization??new OrganizationInfo() { ID=new Guid() }
+                };//实例化插入对象
+                service.AddEntity(word);
+                if (request.Files.Count != 2)
+                    return new StateMessage() { StateCode = StateCode.noRequestError, StateDescription = "请求无附加文件或附加文件数量有误" };
+                request.Files[0].SaveAs(request.MapPath("/Content/" + templetType + "/w" + tempID + ".docx"));
+                request.Files[1].SaveAs(request.MapPath("/Content/" + templetType + "/w" + tempID + ".png"));//存储文件
+            }
+            return new StateMessage() { StateCode = StateCode.normal, StateDescription = "上传成功" };
+        }
 
         /// <summary>
         /// 从lambda动态条件创建泛型lambda的where表达式

@@ -300,26 +300,28 @@ namespace ServerForVSTO.Controllers
                 switch (modifyScreenResult.TempletType)
                 {
                     case TempletType.WordTemplet:
-                        ServiceSessionFactory.ServiceSession.WordTempletService.DeleteEntity(new WordTemplet() { ID = id });
+                        ServiceSessionFactory.ServiceSession.WordTempletService.DeleteEntity((WordTemplet)b);
                         break;
                     case TempletType.ExcelTemplet:
-                        ServiceSessionFactory.ServiceSession.ExcelService.DeleteEntity(new ExcelTemplet() { ID = id });
+                        ServiceSessionFactory.ServiceSession.ExcelService.DeleteEntity((ExcelTemplet)b);
                         break;
                     case TempletType.PPTTemplet:
-                        ServiceSessionFactory.ServiceSession.PPTService.DeleteEntity(new PPTTemplet() { ID = id });
+                        ServiceSessionFactory.ServiceSession.PPTService.DeleteEntity((PPTTemplet)b);
                         break;
                     case TempletType.ImageTemplet:
-                        ServiceSessionFactory.ServiceSession.ImageService.DeleteEntity(new ImageTemplet() { ID = id });
+                        ServiceSessionFactory.ServiceSession.ImageService.DeleteEntity((ImageTemplet)b);
                         break;
                     case TempletType.VideoTemplet:
-                        ServiceSessionFactory.ServiceSession.VideoService.DeleteEntity(new VideoTemplet() { ID = id });
+                        ServiceSessionFactory.ServiceSession.VideoService.DeleteEntity((VideoTemplet)b);
                         break;
                     case TempletType.AudioTemplet:
-                        ServiceSessionFactory.ServiceSession.AudioService.DeleteEntity(new AudioTemplet() { ID = id });
+                        ServiceSessionFactory.ServiceSession.AudioService.DeleteEntity((AudioTemplet)b);
                         break;
                     default:
                         break;
                 }
+                System.IO.File.Delete(Request.MapPath(b.FilePath));
+                System.IO.File.Delete(Request.MapPath(b.ImagePath));
             }
             else
             {

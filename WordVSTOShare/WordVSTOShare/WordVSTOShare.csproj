@@ -182,8 +182,14 @@
     can be found.
   -->
   <ItemGroup>
+    <Compile Include="Model\ScreenResultModel.cs" />
+    <Compile Include="Model\StateCode.cs" />
     <Compile Include="Model\StateMessage.cs" />
+    <Compile Include="Model\TempletForJson.cs" />
+    <Compile Include="Model\TempletType.cs" />
     <Compile Include="Model\Token.cs" />
+    <Compile Include="Model\UserForTemplet.cs" />
+    <Compile Include="Model\UserMsg.cs" />
     <Compile Include="util\FileHelper.cs" />
     <Compile Include="FormFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">

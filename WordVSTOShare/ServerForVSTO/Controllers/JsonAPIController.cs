@@ -60,6 +60,8 @@ namespace ServerForVSTO.Controllers
         {
 
             UserForTemplet user = new ValidateToken().CheckUser(screen.TokenValue);
+            if (user.StateCode != StateCode.normal)
+                return Json(new List<TempletForJson>() { new TempletForJson() { StateCode = user.StateCode, StateDescription = user.StateDescription } });
             IQueryable<BaseTemplet> templets = util.GetScreenResult(user, screen, out int totalcount);//根据筛选条件查询结果
             List<BaseTemplet> temp = templets.ToList();//由于直接使用IQueryable赋值会抛出DataReader未释放的异常，故先转换为List。推测是IQueryable的数据库访问是用时查询，缺少异步封装导致的(就是懒得写异步了)
             List<TempletForJson> result = new List<TempletForJson>();//由于外键链接，直接使用Json实例化查询结果会导致重复引用，所以这里建立新模型以方便Json传输
@@ -69,18 +71,50 @@ namespace ServerForVSTO.Controllers
                 {
                     ID = templet.ID,
                     UserID = templet.User.ID,
-                    Organization = templet.Organization == null?new Guid(): templet.Organization.ID,
+                    Organization = templet.Organization == null ? new Guid() : templet.Organization.ID,
                     Accessibility = templet.Accessibility,
                     TempletName = templet.TempletName,
                     TempletIntroduction = templet.TempletIntroduction,
                     ImagePath = templet.ImagePath,
                     FilePath = templet.FilePath,
-                    ModTime = templet.ModTime
+                    ModTime = templet.ModTime,
+                    StateCode = StateCode.normal,
+                    StateDescription = "获取成功"
                 });
             }
 
             return Json(result);
 
+        }
+
+        public ActionResult UploadWord(TempletForJson templet)
+        {
+            return Json(util.SaveTemplet(templet,System.Web.HttpContext.Current.Request,ServiceSessionFactory.ServiceSession.WordTempletService,"Word"));
+        }
+
+        public ActionResult UploadExcel(TempletForJson templet)
+        {
+            return Json(util.SaveTemplet(templet, System.Web.HttpContext.Current.Request, ServiceSessionFactory.ServiceSession.ExcelService,"Excel"));
+        }
+
+        public ActionResult UploadPPT(TempletForJson templet)
+        {
+            return Json(util.SaveTemplet(templet, System.Web.HttpContext.Current.Request, ServiceSessionFactory.ServiceSession.PPTService,"PPT"));
+        }
+
+        public ActionResult UploadImage(TempletForJson templet)
+        {
+            return Json(util.SaveTemplet(templet, System.Web.HttpContext.Current.Request, ServiceSessionFactory.ServiceSession.ImageService,"Img"));
+        }
+
+        public ActionResult UploadAudio(TempletForJson templet)
+        {
+            return Json(util.SaveTemplet(templet, System.Web.HttpContext.Current.Request, ServiceSessionFactory.ServiceSession.AudioService,"Audio"));
+        }
+
+        public ActionResult UploadVideo(TempletForJson templet)
+        {
+            return Json(util.SaveTemplet(templet, System.Web.HttpContext.Current.Request, ServiceSessionFactory.ServiceSession.VideoService,"Video"));
         }
 
     }
