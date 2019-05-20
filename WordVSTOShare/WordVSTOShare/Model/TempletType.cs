@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace ServerForVSTO.Models
+namespace WordVSTOShare.Model
 {
     /// <summary>
     /// 模板的类型。

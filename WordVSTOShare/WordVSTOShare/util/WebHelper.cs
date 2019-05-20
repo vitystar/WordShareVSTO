@@ -9,6 +9,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WordVSTOShare.Model;
 
 namespace WordVSTOShare.util
 {
@@ -23,12 +24,12 @@ namespace WordVSTOShare.util
         /// <param name="obj">传入的对象实体</param>
         /// <param name="uri">上传的地址信息</param>
         /// <returns>获得的对象实体</returns>
-        public static T GetJson<S, T>(S obj, string uri) where T : class, new() where S : class, new()
+        public static T GetJson<S, T>(S obj, string uri) where T : Token, new() where S : class, new()
         {
             HttpWebRequest request;
             if (uri.StartsWith("https", StringComparison.OrdinalIgnoreCase))
             {
-                ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback((object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors)=>true);
+                ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback((object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors) => true);
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Ssl3;
                 request = WebRequest.Create(uri) as HttpWebRequest;
                 request.ProtocolVersion = HttpVersion.Version10;
@@ -58,6 +59,11 @@ namespace WordVSTOShare.util
             //webClient.Encoding = Encoding.UTF8;
             //string result = webClient.UploadString(JsonConvert.SerializeObject(obj), uri);
             //return JsonConvert.DeserializeObject<T>(result);
+        }
+
+        public static T UploadFile<S, T>() where T : StateMessage, new() where S : Token, new()
+        {
+            return null;
         }
     }
 }

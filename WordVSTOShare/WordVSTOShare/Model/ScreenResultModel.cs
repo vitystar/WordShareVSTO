@@ -1,11 +1,9 @@
-﻿using BLLAPI;
-using ModelAPI;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace ServerForVSTO.Models
+namespace WordVSTOShare.Model
 {
     /// <summary>
     /// 筛选选项

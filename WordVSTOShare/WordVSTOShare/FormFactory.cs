@@ -10,7 +10,7 @@ namespace WordVSTOShare
     public class FormFactory
     {
 
-        public static UserMessage UserMessage { get; set; }
+        public static Token JWTToken { get; set; }
 
         private static TempletList _templetForm;
         public static TempletList TempletForm
