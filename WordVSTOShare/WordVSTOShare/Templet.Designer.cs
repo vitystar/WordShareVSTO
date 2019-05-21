@@ -35,6 +35,10 @@
         private void InitializeComponent()
         {
             Microsoft.Office.Tools.Ribbon.RibbonDialogLauncher ribbonDialogLauncherImpl1 = this.Factory.CreateRibbonDialogLauncher();
+            Microsoft.Office.Tools.Ribbon.RibbonDropDownItem ribbonDropDownItemImpl1 = this.Factory.CreateRibbonDropDownItem();
+            Microsoft.Office.Tools.Ribbon.RibbonDropDownItem ribbonDropDownItemImpl2 = this.Factory.CreateRibbonDropDownItem();
+            Microsoft.Office.Tools.Ribbon.RibbonDropDownItem ribbonDropDownItemImpl3 = this.Factory.CreateRibbonDropDownItem();
+            Microsoft.Office.Tools.Ribbon.RibbonDropDownItem ribbonDropDownItemImpl4 = this.Factory.CreateRibbonDropDownItem();
             Microsoft.Office.Tools.Ribbon.RibbonDropDownItem ribbonDropDownItemImpl5 = this.Factory.CreateRibbonDropDownItem();
             Microsoft.Office.Tools.Ribbon.RibbonDropDownItem ribbonDropDownItemImpl6 = this.Factory.CreateRibbonDropDownItem();
             Microsoft.Office.Tools.Ribbon.RibbonDropDownItem ribbonDropDownItemImpl7 = this.Factory.CreateRibbonDropDownItem();
@@ -42,11 +46,6 @@
             Microsoft.Office.Tools.Ribbon.RibbonDropDownItem ribbonDropDownItemImpl9 = this.Factory.CreateRibbonDropDownItem();
             Microsoft.Office.Tools.Ribbon.RibbonDropDownItem ribbonDropDownItemImpl10 = this.Factory.CreateRibbonDropDownItem();
             Microsoft.Office.Tools.Ribbon.RibbonDropDownItem ribbonDropDownItemImpl11 = this.Factory.CreateRibbonDropDownItem();
-            Microsoft.Office.Tools.Ribbon.RibbonDropDownItem ribbonDropDownItemImpl12 = this.Factory.CreateRibbonDropDownItem();
-            Microsoft.Office.Tools.Ribbon.RibbonDropDownItem ribbonDropDownItemImpl1 = this.Factory.CreateRibbonDropDownItem();
-            Microsoft.Office.Tools.Ribbon.RibbonDropDownItem ribbonDropDownItemImpl2 = this.Factory.CreateRibbonDropDownItem();
-            Microsoft.Office.Tools.Ribbon.RibbonDropDownItem ribbonDropDownItemImpl3 = this.Factory.CreateRibbonDropDownItem();
-            Microsoft.Office.Tools.Ribbon.RibbonDropDownItem ribbonDropDownItemImpl4 = this.Factory.CreateRibbonDropDownItem();
             this.PrivateShare = this.Factory.CreateRibbonTab();
             this.GrpOption = this.Factory.CreateRibbonGroup();
             this.UserName = this.Factory.CreateRibbonEditBox();
@@ -54,6 +53,7 @@
             this.IPAddr = this.Factory.CreateRibbonEditBox();
             this.btnSaveSetting = this.Factory.CreateRibbonButton();
             this.GrpBroswer = this.Factory.CreateRibbonGroup();
+            this.cmbDownloadType = this.Factory.CreateRibbonComboBox();
             this.labelTmpName = this.Factory.CreateRibbonLabel();
             this.cmbDownloadAccess = this.Factory.CreateRibbonComboBox();
             this.GrpUpdate = this.Factory.CreateRibbonGroup();
@@ -65,7 +65,6 @@
             this.btnServerWeb = this.Factory.CreateRibbonButton();
             this.btnOfficalWeb = this.Factory.CreateRibbonButton();
             this.btnAbout = this.Factory.CreateRibbonButton();
-            this.cmbDownloadType = this.Factory.CreateRibbonComboBox();
             this.PrivateShare.SuspendLayout();
             this.GrpOption.SuspendLayout();
             this.GrpBroswer.SuspendLayout();
@@ -126,6 +125,20 @@
             this.GrpBroswer.Name = "GrpBroswer";
             this.GrpBroswer.DialogLauncherClick += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.GrpBroswer_DialogLauncherClick);
             // 
+            // cmbDownloadType
+            // 
+            ribbonDropDownItemImpl1.Label = "文档模板";
+            ribbonDropDownItemImpl2.Label = "图片";
+            ribbonDropDownItemImpl3.Label = "音频";
+            ribbonDropDownItemImpl4.Label = "视频";
+            this.cmbDownloadType.Items.Add(ribbonDropDownItemImpl1);
+            this.cmbDownloadType.Items.Add(ribbonDropDownItemImpl2);
+            this.cmbDownloadType.Items.Add(ribbonDropDownItemImpl3);
+            this.cmbDownloadType.Items.Add(ribbonDropDownItemImpl4);
+            this.cmbDownloadType.Label = "模板类型";
+            this.cmbDownloadType.Name = "cmbDownloadType";
+            this.cmbDownloadType.Text = null;
+            // 
             // labelTmpName
             // 
             this.labelTmpName.Label = " ";
@@ -168,14 +181,12 @@
             // 
             // cmbUploadType
             // 
-            ribbonDropDownItemImpl9.Label = "所有模板";
-            ribbonDropDownItemImpl10.Label = "公共模板";
-            ribbonDropDownItemImpl11.Label = "私有模板";
-            ribbonDropDownItemImpl12.Label = "组织模板";
+            ribbonDropDownItemImpl9.Label = "公共模板";
+            ribbonDropDownItemImpl10.Label = "私有模板";
+            ribbonDropDownItemImpl11.Label = "组织模板";
             this.cmbUploadType.Items.Add(ribbonDropDownItemImpl9);
             this.cmbUploadType.Items.Add(ribbonDropDownItemImpl10);
             this.cmbUploadType.Items.Add(ribbonDropDownItemImpl11);
-            this.cmbUploadType.Items.Add(ribbonDropDownItemImpl12);
             this.cmbUploadType.Label = "模板类型";
             this.cmbUploadType.Name = "cmbUploadType";
             this.cmbUploadType.Text = null;
@@ -210,19 +221,6 @@
             // 
             this.btnAbout.Label = "关于";
             this.btnAbout.Name = "btnAbout";
-            // 
-            // cmbDownloadType
-            // 
-            ribbonDropDownItemImpl1.Label = "文档模板";
-            ribbonDropDownItemImpl2.Label = "图片";
-            ribbonDropDownItemImpl3.Label = "音频";
-            ribbonDropDownItemImpl4.Label = "视频";
-            this.cmbDownloadType.Items.Add(ribbonDropDownItemImpl1);
-            this.cmbDownloadType.Items.Add(ribbonDropDownItemImpl2);
-            this.cmbDownloadType.Items.Add(ribbonDropDownItemImpl3);
-            this.cmbDownloadType.Items.Add(ribbonDropDownItemImpl4);
-            this.cmbDownloadType.Label = "模板类型";
-            this.cmbDownloadType.Name = "cmbDownloadType";
             // 
             // Templet
             // 

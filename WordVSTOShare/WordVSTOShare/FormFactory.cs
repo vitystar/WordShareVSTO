@@ -11,6 +11,7 @@ namespace WordVSTOShare
     {
 
         public static Token JWTToken { get; set; }
+        public static UserMsg userMsg { get; set; }
 
         private static TempletList _templetForm;
         public static TempletList TempletForm

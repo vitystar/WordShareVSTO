@@ -10,6 +10,7 @@ namespace WordVSTOShare.Model
     /// </summary>
     public enum StateCode
     {
+        requestBodyError = 5,
         request = 6,
         normal = 8,
         tokenError = 10,
