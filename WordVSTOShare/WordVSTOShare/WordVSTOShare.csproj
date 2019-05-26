@@ -264,7 +264,7 @@
     </ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>4F869C0BF76ED17E1BEA6A5A066E194006790CB4</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>13434463C4419BA8B02765BC1B9CE60EF3712DC8</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>false</SignAssembly>

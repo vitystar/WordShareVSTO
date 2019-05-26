@@ -24,7 +24,7 @@ namespace WordVSTOShare.util
         /// <param name="obj">传入的对象实体</param>
         /// <param name="uri">上传的地址信息</param>
         /// <returns>获得的对象实体</returns>
-        public static async Task<T> GetJson<S, T>(S obj, string uri) where T : Token, new() where S : class, new()
+        public static async Task<T> GetJson<S, T>(S obj, string uri) where T : class, new() where S : class, new()
         {
             HttpWebRequest request;
             if (uri.StartsWith("https", StringComparison.OrdinalIgnoreCase))
@@ -74,6 +74,7 @@ namespace WordVSTOShare.util
             if (filePath.Length == 2)
                 return await Task.Run(() =>
                 {
+                    #region 构建WebClient对象
                     using (WebClient client = new WebClient())
                     {
                         if (url.StartsWith("https", StringComparison.OrdinalIgnoreCase))
@@ -85,65 +86,73 @@ namespace WordVSTOShare.util
                         string responseContent;
                         MemoryStream memStream = new MemoryStream();
                         HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(url);
-                    // 边界符
-                    string boundary = "---------------" + DateTime.Now.Ticks.ToString("x");
-                    // 边界符
-                    byte[] beginBoundary = Encoding.ASCII.GetBytes("--" + boundary + "\r\n");
+                        #endregion
+                        #region 构建文件流对象
                         FileStream fileStream1 = new FileStream(filePath[0], FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
                         FileStream fileStream2 = new FileStream(filePath[1], FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-                    // 最后的结束符
-                    byte[] endBoundary = Encoding.ASCII.GetBytes("--" + boundary + "--\r\n");
-                    // 设置属性
-                    webRequest.Method = "POST";
+                        #endregion
+                        #region 边界符
+                        string boundary = "---------------" + DateTime.Now.Ticks.ToString("x");
+                        byte[] beginBoundary = Encoding.ASCII.GetBytes("--" + boundary + "\r\n");
+                        #endregion
+                        #region 结束符
+                        byte[] endBoundary = Encoding.ASCII.GetBytes("--" + boundary + "--\r\n");
+                        #endregion
+                        #region 初始化Client属性，POST方式，超时时间和表单提交
+                        webRequest.Method = "POST";
                         webRequest.Timeout = 2000;
                         webRequest.ContentType = "multipart/form-data; boundary=" + boundary;
-                    // 写入文件
-                    const string filePartHeader =
+                        #endregion
+                        #region 写入文件1
+                        const string filePartHeader =
                             "Content-Disposition: form-data; name=\"{0}\"; filename=\"{1}\"\r\n" +
                              "Content-Type: application/octet-stream\r\n\r\n";
-                        string header = string.Format(filePartHeader, "File1", filePath[0]);
+                        string header = string.Format(filePartHeader, "File1", filePath[0]);//构建参数头
                         byte[] headerbytes = Encoding.UTF8.GetBytes(header);
                         memStream.Write(beginBoundary, 0, beginBoundary.Length);
-                        memStream.Write(headerbytes, 0, headerbytes.Length);
-                        var buffer = new byte[1024];
-                        int bytesRead; // =0
-                    while ((bytesRead = fileStream1.Read(buffer, 0, buffer.Length)) != 0)
+                        memStream.Write(headerbytes, 0, headerbytes.Length);//向流中写入参数头
+                        var buffer = new byte[1024];//创建缓冲区
+                        int bytesRead;
+                        while ((bytesRead = fileStream1.Read(buffer, 0, buffer.Length)) != 0)
                         {
-                            memStream.Write(buffer, 0, bytesRead);
+                            memStream.Write(buffer, 0, bytesRead);//读取文件内容
                         }
-
-                        header = string.Format(filePartHeader, "File2", filePath[1]);
+                        #endregion
+                        #region 写入文件2
+                        header = string.Format(filePartHeader, "File2", filePath[1]);//构建参数头
+                        header = "\r\n--" + boundary + "\r\n" + header;
                         headerbytes = Encoding.UTF8.GetBytes(header);
-                        memStream.Write(beginBoundary, 0, beginBoundary.Length);
-                        memStream.Write(headerbytes, 0, headerbytes.Length);
+                        memStream.Write(headerbytes, 0, headerbytes.Length);//向流中写入参数头
                         while ((bytesRead = fileStream2.Read(buffer, 0, buffer.Length)) != 0)
                         {
                             memStream.Write(buffer, 0, bytesRead);
                         }
-
-                    // 写入字符串的Key
-                    var stringKeyHeader = "\r\n--" + boundary +
-                                               "\r\nContent-Disposition: form-data; name=\"{0}\"" +
-                                               "\r\n\r\n{1}\r\n";
+                        #endregion
+                        #region 写入所有其他字符参数
+                        var stringKeyHeader = "\r\n--" + boundary +
+                                                   "\r\nContent-Disposition: form-data; name=\"{0}\"" +
+                                                   "\r\n\r\n{1}\r\n";
                         Model.Accessibility Access = templet.Accessibility;
                         Dictionary<string, string> stringDict = new Dictionary<string, string>();
                         stringDict.Add("TokenValue", templet.TokenValue);
                         stringDict.Add("TempletName", templet.TempletName);
                         stringDict.Add("TempletIntroduction", templet.TempletIntroduction);
-                        stringDict.Add("Accessibility", ((int)templet.Accessibility).ToString());
+                        stringDict.Add("Accessibility", ((int)templet.Accessibility).ToString());//构建字典以遍历写入流信息
                         string str = "";
                         foreach (string formitem in from string key in stringDict.Keys
-                                                         select string.Format(stringKeyHeader, key, stringDict[key])
+                                                    select string.Format(stringKeyHeader, key, stringDict[key])
                                                              into formitem
-                                                         select formitem)
+                                                    select formitem)
                         {
                             str += formitem;
                             byte[] formitembytes = Encoding.UTF8.GetBytes(formitem);
                             memStream.Write(formitembytes, 0, formitembytes.Length);
                         }
-                        Console.WriteLine(str);
-                    // 写入最后的结束边界符
-                    memStream.Write(endBoundary, 0, endBoundary.Length);
+                        #endregion
+                        #region 写入结束符
+                        memStream.Write(endBoundary, 0, endBoundary.Length);
+                        #endregion
+                        #region 发送请求，获取结果并释放对象
                         webRequest.ContentLength = memStream.Length;
                         var requestStream = webRequest.GetRequestStream();
                         memStream.Position = 0;
@@ -162,11 +171,25 @@ namespace WordVSTOShare.util
                         fileStream2.Close();
                         httpWebResponse.Close();
                         webRequest.Abort();
+                        #endregion
                         return JsonConvert.DeserializeObject<T>(responseContent);
                     }
                 });
             else
                 return new T() { StateCode = StateCode.requestBodyError, StateDescription = "请求参数不正确" };
+        }
+
+        public async static Task GetFile(string url,string filePath)
+        {
+            await Task.Run(() =>
+            {
+                WebClient client = new WebClient();
+                byte[] data = client.DownloadData(url);//一个真正存放数据的地址，一般我们将连接存在数据库中，数据存放在数据服务器上
+                FileStream fs = new FileStream(filePath, FileMode.Create);
+                //将byte数组写入文件中
+                fs.Write(data, 0, data.Length);
+                fs.Close();
+            });
         }
     }
 }

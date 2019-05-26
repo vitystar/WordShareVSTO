@@ -16,9 +16,10 @@ namespace ServerForVSTO.App_Common
         /// </summary>
         /// <param name="user">用户信息</param>
         /// <param name="screenResult">筛选选项</param>
+        /// <param name="pageCount">每页记录条数</param>
         /// <param name="totalCount">记录总数</param>
         /// <returns>查询到的记录集合</returns>
-        public IQueryable<BaseTemplet> GetScreenResult(UserForTemplet user, ScreenResultModel screenResult, out int totalCount)
+        public IQueryable<BaseTemplet> GetScreenResult(UserForTemplet user, ScreenResultModel screenResult, int pageCount, out int totalCount)
         {
             #region 初始化变量
             Func<ParameterExpression, BinaryExpression> whereLambda;
@@ -111,17 +112,17 @@ namespace ServerForVSTO.App_Common
 
             #region 判断模板类型并取值
             if (screenResult.TempletType == TempletType.PPTTemplet)
-                templets = ServiceSessionFactory.ServiceSession.PPTService.LoadEntityPage(pageIndex, 6, out totalCount, MakeWhereLambda<PPTTemplet>(whereLambda), w => w.TempletName, true);
+                templets = ServiceSessionFactory.ServiceSession.PPTService.LoadEntityPage(pageIndex, pageCount, out totalCount, MakeWhereLambda<PPTTemplet>(whereLambda), w => w.TempletName, true);
             else if (screenResult.TempletType == TempletType.ExcelTemplet)
-                templets = ServiceSessionFactory.ServiceSession.ExcelService.LoadEntityPage(pageIndex, 6, out totalCount, MakeWhereLambda<ExcelTemplet>(whereLambda), w => w.TempletName, true);
+                templets = ServiceSessionFactory.ServiceSession.ExcelService.LoadEntityPage(pageIndex, pageCount, out totalCount, MakeWhereLambda<ExcelTemplet>(whereLambda), w => w.TempletName, true);
             else if (screenResult.TempletType == TempletType.ImageTemplet)
-                templets = ServiceSessionFactory.ServiceSession.ImageService.LoadEntityPage(pageIndex, 6, out totalCount, MakeWhereLambda<ImageTemplet>(whereLambda), w => w.TempletName, true);
+                templets = ServiceSessionFactory.ServiceSession.ImageService.LoadEntityPage(pageIndex, pageCount, out totalCount, MakeWhereLambda<ImageTemplet>(whereLambda), w => w.TempletName, true);
             else if (screenResult.TempletType == TempletType.AudioTemplet)
-                templets = ServiceSessionFactory.ServiceSession.AudioService.LoadEntityPage(pageIndex, 6, out totalCount, MakeWhereLambda<AudioTemplet>(whereLambda), w => w.TempletName, true);
+                templets = ServiceSessionFactory.ServiceSession.AudioService.LoadEntityPage(pageIndex, pageCount, out totalCount, MakeWhereLambda<AudioTemplet>(whereLambda), w => w.TempletName, true);
             else if (screenResult.TempletType == TempletType.VideoTemplet)
-                templets = ServiceSessionFactory.ServiceSession.VideoService.LoadEntityPage(pageIndex, 6, out totalCount, MakeWhereLambda<VideoTemplet>(whereLambda), w => w.TempletName, true);
+                templets = ServiceSessionFactory.ServiceSession.VideoService.LoadEntityPage(pageIndex, pageCount, out totalCount, MakeWhereLambda<VideoTemplet>(whereLambda), w => w.TempletName, true);
             else
-                templets = ServiceSessionFactory.ServiceSession.WordTempletService.LoadEntityPage(pageIndex, 6, out totalCount, MakeWhereLambda<WordTemplet>(whereLambda), w => w.TempletName, true);
+                templets = ServiceSessionFactory.ServiceSession.WordTempletService.LoadEntityPage(pageIndex, pageCount, out totalCount, MakeWhereLambda<WordTemplet>(whereLambda), w => w.TempletName, true);
             #endregion
 
             #region 判断搜索选项
@@ -137,6 +138,17 @@ namespace ServerForVSTO.App_Common
             return templets;
         }
 
+        /// <summary>
+        /// 通过筛选对象筛选数据信息
+        /// </summary>
+        /// <param name="user">用户信息</param>
+        /// <param name="screenResult">筛选选项</param>
+        /// <param name="totalCount">记录总数</param>
+        /// <returns>查询到的记录集合</returns>
+        public IQueryable<BaseTemplet> GetScreenResult(UserForTemplet user, ScreenResultModel screenResult, out int totalCount)
+        {
+            return GetScreenResult(user, screenResult, 6, out totalCount);
+        }
 
         /// <summary>
         /// 添加模板文件
@@ -149,7 +161,7 @@ namespace ServerForVSTO.App_Common
         /// <returns>插入结果</returns>
         public StateMessage SaveTemplet<T>(TempletForJson templet, HttpRequest request, IBaseService<T> service, string templetType) where T : BaseTemplet, new()
         {
-            UserForTemplet user = new ValidateToken().CheckUser(templet.TokenValue);//token验证用户
+            UserForTemplet user = new ValidateToken().CheckUser(templet.TokenValue.Trim());//token验证用户
             if (user.StateCode != StateCode.normal)
                 return new StateMessage() { StateCode = user.StateCode, StateDescription = user.StateDescription };
             UserInfo userInfo = ServiceSessionFactory.ServiceSession.UserInfoService.LoadEntity(u => u.ID == user.ID).FirstOrDefault();//查询用户以写数据库
@@ -170,13 +182,13 @@ namespace ServerForVSTO.App_Common
                     FilePath = "/Content/" + templetType + "/w" + tempID + ".docx",
                     ModTime = DateTime.Now,
                     User = userInfo,
-                    Organization = userInfo.Organization??new OrganizationInfo() { ID=new Guid() }
+                    Organization = userInfo.Organization ?? new OrganizationInfo() { ID = new Guid() }
                 };//实例化插入对象
-                service.AddEntity(word);
                 if (request.Files.Count != 2)
                     return new StateMessage() { StateCode = StateCode.noRequestError, StateDescription = "请求无附加文件或附加文件数量有误" };
                 request.Files[0].SaveAs(request.MapPath("/Content/" + templetType + "/w" + tempID + ".docx"));
                 request.Files[1].SaveAs(request.MapPath("/Content/" + templetType + "/w" + tempID + ".png"));//存储文件
+                service.AddEntity(word);
             }
             return new StateMessage() { StateCode = StateCode.normal, StateDescription = "上传成功" };
         }

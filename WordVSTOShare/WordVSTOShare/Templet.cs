@@ -54,7 +54,7 @@ namespace WordVSTOShare
 
         private void GrpBroswer_DialogLauncherClick(object sender, RibbonControlEventArgs e)
         {
-            if (FormFactory.JWTToken == null)
+            if (FormFactory.JWTToken == null||FormFactory.userMsg == null)
             {
                 MessageBox.Show("无服务器信息或身份验证未通过");
                 return;
@@ -87,12 +87,12 @@ namespace WordVSTOShare
                 MessageBox.Show("无服务器信息或身份验证未通过");
                 return;
             }
-            System.Diagnostics.Process.Start("iexplore.exe", FormFactory.userMsg.IPAddress);
+            System.Diagnostics.Process.Start(FormFactory.userMsg.IPAddress);
         }
 
         private void btnOfficalWeb_Click(object sender, RibbonControlEventArgs e)
         {
-            System.Diagnostics.Process.Start("iexplore.exe", "office.xwyhome.top");
+            System.Diagnostics.Process.Start("http://office.xiaowenyu.top");
         }
 
         private async void btnUpload_Click(object sender, RibbonControlEventArgs e)
@@ -144,5 +144,9 @@ namespace WordVSTOShare
             });
         }
 
+        private void btnAbout_Click(object sender, RibbonControlEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/vitystar/WordShareVSTO");
+        }
     }
 }

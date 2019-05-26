@@ -221,6 +221,7 @@
             // 
             this.btnAbout.Label = "关于";
             this.btnAbout.Name = "btnAbout";
+            this.btnAbout.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btnAbout_Click);
             // 
             // Templet
             // 
