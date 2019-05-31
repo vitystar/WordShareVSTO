@@ -167,7 +167,7 @@ namespace ServerForVSTO.App_Common
             UserInfo userInfo = ServiceSessionFactory.ServiceSession.UserInfoService.LoadEntity(u => u.ID == user.ID).FirstOrDefault();//查询用户以写数据库
             if (userInfo == null)
                 return new StateMessage() { StateCode = StateCode.noUser, StateDescription = "token所指示的用户不存在" };
-            if (userInfo.UserAuth != (UserAuth.Admin | UserAuth.Uploader))//验证用户权限
+            if ((userInfo.UserAuth != (UserAuth.Admin | UserAuth.Uploader))&&templet.Accessibility == Accessibility.Protected)//验证用户权限
                 return new StateMessage() { StateCode = StateCode.permissionDenied, StateDescription = "权限不足" };
             lock (ServiceSessionFactory.ServiceSession)//加锁防止请求并发时ID重复
             {

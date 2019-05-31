@@ -34,7 +34,7 @@ namespace DALAPI
         /// <returns>数据集合</returns>
         IQueryable<T> LoadEntityPage<S>(int pageIndex, int pageSize, out int totalCount, Expression<Func<T, bool>> whereLambda, Expression<Func<T, S>> orderbyLambda, bool asc);
         /// <summary>
-        /// 删除用户
+        /// 删除数据
         /// </summary>
         /// <param name="entity">需要删除的数据实体</param>
         /// <returns>操作完成情况</returns>

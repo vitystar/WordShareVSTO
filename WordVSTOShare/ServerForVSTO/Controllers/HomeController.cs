@@ -29,7 +29,7 @@ namespace ServerForVSTO.Controllers
             #endregion
 
             #region 从数据库查询结果
-            UserForTemplet userForTemplet = userInfo != null ? new UserForTemplet() { ID = userInfo.ID, UserName = userInfo.UserName, OrganizationID = userInfo.Organization.ID, Auth = userInfo.UserAuth }:null;
+            UserForTemplet userForTemplet = userInfo != null ? new UserForTemplet() { ID = userInfo.ID, UserName = userInfo.UserName, OrganizationID = userInfo.Organization==null?new Guid():userInfo.Organization.ID, Auth = userInfo.UserAuth }:null;
             templets = util.GetScreenResult(userForTemplet, screenResult, out totalCount);
             #endregion
 
@@ -62,7 +62,7 @@ namespace ServerForVSTO.Controllers
             return View();
         }
         /// <summary>
-        /// 组织创建逻辑，由AJAX调用
+        /// 组织创建逻辑
         /// </summary>
         /// <returns>创建完成后的页面跳转</returns>
         public ActionResult OrganizationCreate()

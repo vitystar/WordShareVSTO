@@ -171,7 +171,7 @@
                                             <a href="~/Home/Index?pageIndex=@i" @if (i == index) { @MvcHtmlString.Create("class='active'") }>@i</a>
                                         </li>
                                     }
-                                }
+                                } 
                             }
                             <li>
                                 <a href="~/Home/Index?pageIndex=@((index+1)<=count?index+1:count)">下一页</a>
